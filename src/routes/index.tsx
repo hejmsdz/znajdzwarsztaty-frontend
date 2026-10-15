@@ -1,14 +1,26 @@
 import { createFileRoute } from '@tanstack/react-router';
+import type { CSSProperties } from 'react';
+
+import { FiltersSidebar } from '@/components/layout/filters-sidebar/filters-sidebar';
+import { MapCanvas } from '@/components/layout/map-canvas';
+import { TopBar } from '@/components/layout/top-bar/top-bar';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
 export const Route = createFileRoute('/')({ component: Home });
 
 function Home() {
   return (
-    <div className="p-8">
-      <h1 className="text-4xl font-bold">Welcome to TanStack Start</h1>
-      <p className="mt-4 text-lg">
-        Edit <code>src/routes/index.tsx</code> to get started.
-      </p>
-    </div>
+    <SidebarProvider
+      className="flex h-svh flex-col overflow-hidden"
+      style={{ '--sidebar-width': '20rem' } as CSSProperties}
+    >
+      <TopBar />
+      <div className="flex min-h-0 flex-1 overflow-hidden">
+        <FiltersSidebar />
+        <SidebarInset className="min-w-0">
+          <MapCanvas />
+        </SidebarInset>
+      </div>
+    </SidebarProvider>
   );
 }
