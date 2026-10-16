@@ -1,6 +1,5 @@
 import L from 'leaflet';
 import { LocateFixedIcon, MinusIcon, PlusIcon } from 'lucide-react';
-import { useQuery } from '@tanstack/react-query';
 import {
   MapContainer,
   Marker,
@@ -8,8 +7,9 @@ import {
   Tooltip,
   useMap,
 } from 'react-leaflet';
-import { workshopsQueryOptions } from '@/api/workshops';
+import { useWorkshops } from '#/hooks/queries/use-workshops';
 import { Button } from '@/components/ui/button';
+import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
 
 const MAP_CENTER: [number, number] = [52.06, 19.48];
 const DEFAULT_ZOOM = 6;
@@ -57,7 +57,8 @@ function MapControls() {
 }
 
 export function MapCanvas() {
-  const { data: workshops } = useQuery(workshopsQueryOptions);
+  const [search] = useWorkshopsSearchParams();
+  const { data: workshops } = useWorkshops(search);
 
   return (
     <div className="relative min-h-0 flex-1">
@@ -72,7 +73,7 @@ export function MapCanvas() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {(workshops ?? []).map((workshop) => (
+        {(workshops?.items ?? []).map((workshop) => (
           <Marker
             key={workshop.id}
             position={[workshop.location.lat, workshop.location.lon]}

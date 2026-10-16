@@ -1,9 +1,5 @@
-import { useState } from 'react';
-import { SparklesIcon } from 'lucide-react';
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import {
   Sidebar,
   SidebarContent,
@@ -11,41 +7,49 @@ import {
   SidebarHeader,
   SidebarSeparator,
 } from '@/components/ui/sidebar';
-
 import { CheckboxFilter } from './checkbox-filter';
-import {
-  AMENITIES,
-  LEVELS,
-  MONTHS,
-  RESULT_COUNT,
-  VOIVODESHIP_OPTIONS,
-  WORKSHOP_TYPES,
-} from './constants';
-import { SelectFilter } from './select-filter';
 import { SliderFilter } from './slider-filter';
+import {
+  COST_MAX,
+  COST_MIN,
+  COST_STEP,
+  COST_TICKS,
+  emptySearch,
+  LEVELS,
+  WORKSHOP_TYPES,
+} from '@/filters/types';
+import type { WorkshopsSearch } from '@/filters/types';
+import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
+
+function formatCostLabel({
+  costMin = COST_MIN,
+  costMax = COST_MAX,
+}: Pick<WorkshopsSearch, 'costMin' | 'costMax'>) {
+  if (costMin === COST_MIN && costMax === COST_MAX) {
+    return 'Dowolna cena';
+  }
+
+  if (costMax === 0) {
+    return 'Bezpłatne';
+  }
+
+  if (costMin === 0 && costMax > 0) {
+    return `do ${costMax} zł`;
+  }
+
+  if (costMax === COST_MAX) {
+    return `od ${costMin} zł`;
+  }
+
+  if (costMin === costMax) {
+    return `${costMin} zł`;
+  }
+
+  return `${costMin} – ${costMax} zł`;
+}
 
 export function FiltersSidebar() {
-  const [voivodeship, setVoivodeship] = useState('all');
-  const [months, setMonths] = useState<[number, number]>([1, 12]);
-  const [types, setTypes] = useState<string[]>([]);
-  const [levels, setLevels] = useState<string[]>([]);
-  const [amenities, setAmenities] = useState<string[]>([]);
-
-  const [from, to] = months;
-  const monthsLabel =
-    from === 1 && to === 12
-      ? 'Cały rok'
-      : from === to
-        ? MONTHS[from - 1]
-        : `${MONTHS[from - 1]} – ${MONTHS[to - 1]}`;
-
-  function clearFilters() {
-    setVoivodeship('all');
-    setMonths([1, 12]);
-    setTypes([]);
-    setLevels([]);
-    setAmenities([]);
-  }
+  const [search, onChange] = useWorkshopsSearchParams();
 
   return (
     <Sidebar
@@ -58,7 +62,7 @@ export function FiltersSidebar() {
             Filtry
           </h2>
           <Badge variant="secondary" className="font-medium tabular-nums">
-            {RESULT_COUNT} warsztaty
+            {/* {data ? `${data.totalItems} warsztatów` : '…'} */}
           </Badge>
         </div>
         <p className="text-xs text-muted-foreground">
@@ -67,42 +71,35 @@ export function FiltersSidebar() {
       </SidebarHeader>
       <SidebarSeparator />
       <SidebarContent className="px-1 pt-2">
-        <SelectFilter
-          label="Lokalizacja"
-          value={voivodeship}
-          options={VOIVODESHIP_OPTIONS}
-          onValueChange={(value) => setVoivodeship(value ?? 'all')}
-        />
-        <SliderFilter
-          label="Termin"
-          min={1}
-          max={12}
-          value={months}
-          onValueChange={setMonths}
-          ticks={MONTHS}
-          valueLabel={monthsLabel}
-        />
         <CheckboxFilter
           label="Rodzaj warsztatów"
           options={WORKSHOP_TYPES}
-          value={types}
-          onValueChange={setTypes}
+          value={search.type ?? []}
+          onValueChange={(type) => onChange({ type })}
         />
         <CheckboxFilter
           label="Poziom zaawansowania"
           options={LEVELS}
-          value={levels}
-          onValueChange={setLevels}
+          value={search.level ?? []}
+          onValueChange={(level) => onChange({ level })}
         />
-        <CheckboxFilter
-          label="Udogodnienia"
-          options={AMENITIES}
-          value={amenities}
-          onValueChange={setAmenities}
+        <SliderFilter
+          label="Koszt uczestnictwa (zł)"
+          min={COST_MIN}
+          max={COST_MAX}
+          step={COST_STEP}
+          value={[search.costMin ?? COST_MIN, search.costMax ?? COST_MAX]}
+          onValueChange={([costMin, costMax]) => onChange({ costMin, costMax })}
+          ticks={COST_TICKS}
+          valueLabel={formatCostLabel(search)}
         />
       </SidebarContent>
       <SidebarFooter className="border-t p-3">
-        <Button variant="outline" className="w-full" onClick={clearFilters}>
+        <Button
+          variant="outline"
+          className="w-full"
+          onClick={() => onChange(emptySearch)}
+        >
           Wyczyść filtry
         </Button>
       </SidebarFooter>

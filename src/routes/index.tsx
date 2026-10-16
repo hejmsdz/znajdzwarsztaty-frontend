@@ -1,12 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router';
 import type { CSSProperties } from 'react';
-
+import { workshopsSearchSchema } from '#/filters/types';
 import { FiltersSidebar } from '@/components/layout/filters-sidebar/filters-sidebar';
 import { MapCanvas } from '@/components/layout/map-canvas';
 import { TopBar } from '@/components/layout/top-bar/top-bar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
-export const Route = createFileRoute('/')({ component: Home });
+export const Route = createFileRoute('/')({
+  component: Home,
+  validateSearch: workshopsSearchSchema,
+});
 
 function Home() {
   return (

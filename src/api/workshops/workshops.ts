@@ -1,6 +1,4 @@
-import { queryOptions } from '@tanstack/react-query';
-
-import { apiFetch } from './api';
+import { apiFetch } from '../api';
 
 const COLLECTION_PATH = '/api/collections/workshops/records';
 
@@ -41,13 +39,23 @@ interface WorkshopsResponse {
   items: Workshop[];
 }
 
-export async function fetchWorkshops(): Promise<Workshop[]> {
-  const data = await apiFetch<WorkshopsResponse>(COLLECTION_PATH);
-
-  return data.items;
+export interface WorkshopsData {
+  items: Workshop[];
+  totalItems: number;
 }
 
-export const workshopsQueryOptions = queryOptions({
-  queryKey: ['workshops'],
-  queryFn: fetchWorkshops,
-});
+export async function fetchWorkshops(filter?: string): Promise<WorkshopsData> {
+  const params = new URLSearchParams({ perPage: '500' });
+  if (filter) {
+    params.set('filter', filter);
+  }
+
+  const data = await apiFetch<WorkshopsResponse>(
+    `${COLLECTION_PATH}?${params}`,
+  );
+
+  return {
+    items: data.items,
+    totalItems: data.totalItems,
+  };
+}

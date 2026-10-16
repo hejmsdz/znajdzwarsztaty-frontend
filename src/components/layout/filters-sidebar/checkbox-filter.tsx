@@ -2,20 +2,20 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 import { Filter } from './filter';
 
-type CheckboxFilterOption = {
-  value: string;
+type CheckboxFilterOption<T extends string = string> = {
+  value: T;
   label: string;
   count?: number;
 };
 
-type CheckboxFilterProps = {
+type CheckboxFilterProps<T extends string = string> = {
   label: string;
-  options: CheckboxFilterOption[];
-  value: string[];
-  onValueChange: (value: string[]) => void;
+  options: CheckboxFilterOption<T>[];
+  value: T[];
+  onValueChange: (value: T[]) => void;
 };
 
-function toggleValue(list: string[], value: string, checked: boolean) {
+function toggleValue<T>(list: T[], value: T, checked: boolean) {
   return checked ? [...list, value] : list.filter((item) => item !== value);
 }
 
@@ -43,12 +43,12 @@ function CheckboxRow({
   );
 }
 
-export function CheckboxFilter({
+export function CheckboxFilter<T extends string = string>({
   label,
   options,
   value,
   onValueChange,
-}: CheckboxFilterProps) {
+}: CheckboxFilterProps<T>) {
   return (
     <Filter label={label}>
       {options.map((option) => (
