@@ -1,4 +1,5 @@
 import L from 'leaflet';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 import { LocateFixedIcon, MinusIcon, PlusIcon } from 'lucide-react';
 import {
   MapContainer,
@@ -74,18 +75,20 @@ export function MapCanvas() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {(workshops?.items ?? []).map((workshop) => (
-          <Marker
-            key={workshop.id}
-            position={[workshop.location.lat, workshop.location.lon]}
-            icon={pinIcon}
-          >
-            <Tooltip direction="top" offset={[0, -18]}>
-              {workshop.title}
-            </Tooltip>
-            <MapPopup workshop={workshop} />
-          </Marker>
-        ))}
+        <MarkerClusterGroup showCoverageOnHover={false}>
+          {(workshops?.items ?? []).map((workshop) => (
+            <Marker
+              key={workshop.id}
+              position={[workshop.location.lat, workshop.location.lon]}
+              icon={pinIcon}
+            >
+              <Tooltip direction="top" offset={[0, -18]}>
+                {workshop.title}
+              </Tooltip>
+              <MapPopup workshop={workshop} />
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
         <MapControls />
       </MapContainer>
     </div>

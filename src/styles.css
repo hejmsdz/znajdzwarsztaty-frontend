@@ -4,6 +4,7 @@
 @import '@fontsource-variable/dm-sans';
 @import '@fontsource-variable/figtree';
 @import 'leaflet/dist/leaflet.css';
+@import 'react-leaflet-markercluster/styles';
 
 @custom-variant dark (&:is(.dark *));
 
