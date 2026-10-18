@@ -130,3 +130,29 @@
     @apply font-sans;
   }
 }
+
+.workshop-popup {
+  .leaflet-popup-content-wrapper {
+    @apply rounded-2xl bg-card shadow-xl;
+  }
+
+  .leaflet-popup-content {
+    @apply m-0 font-sans text-sm text-card-foreground;
+  }
+
+  .leaflet-popup-tip {
+    @apply bg-card shadow-none;
+  }
+
+  a.leaflet-popup-close-button {
+    @apply absolute top-2 right-2 z-10 flex size-6 items-center justify-center rounded-full p-0 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground;
+  }
+
+  .leaflet-popup-content p {
+    margin: initial;
+  }
+
+  .leaflet-popup-content a {
+    color: inherit;
+  }
+}

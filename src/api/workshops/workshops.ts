@@ -1,4 +1,5 @@
 import { apiFetch } from '../api';
+import type { Instructor } from '../instructors';
 
 const COLLECTION_PATH = '/api/collections/workshops/records';
 
@@ -29,6 +30,9 @@ export interface Workshop {
   instructors: string[];
   created: string;
   updated: string;
+  expand?: {
+    instructors?: Instructor[];
+  };
 }
 
 interface WorkshopsResponse {
@@ -45,7 +49,7 @@ export interface WorkshopsData {
 }
 
 export async function fetchWorkshops(filter?: string): Promise<WorkshopsData> {
-  const params = new URLSearchParams({ perPage: '500' });
+  const params = new URLSearchParams({ perPage: '500', expand: 'instructors' });
   if (filter) {
     params.set('filter', filter);
   }

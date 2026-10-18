@@ -7,9 +7,10 @@ import {
   Tooltip,
   useMap,
 } from 'react-leaflet';
+import { MapPopup } from '#/components/map-popup';
 import { useWorkshops } from '#/hooks/queries/use-workshops';
-import { Button } from '@/components/ui/button';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
+import { Button } from '@/components/ui/button';
 
 const MAP_CENTER: [number, number] = [52.06, 19.48];
 const DEFAULT_ZOOM = 6;
@@ -82,6 +83,7 @@ export function MapCanvas() {
             <Tooltip direction="top" offset={[0, -18]}>
               {workshop.title}
             </Tooltip>
+            <MapPopup workshop={workshop} />
           </Marker>
         ))}
         <MapControls />
