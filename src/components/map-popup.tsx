@@ -159,8 +159,9 @@ export function MapPopup({ workshop }: { workshop: Workshop }) {
                 <a
                   href={workshop.infoUrl}
                   className={cn(
+                    'flex-1',
                     buttonVariants({
-                      variant: workshop.registerUrl ? 'outline' : 'default',
+                      variant: 'outline',
                       size: 'sm',
                     }),
                   )}
