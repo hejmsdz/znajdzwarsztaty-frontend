@@ -22,6 +22,7 @@ export const LEVELS: { value: WorkshopLevel; label: string }[] = [
 export const workshopsSearchSchema = z.object({
   type: z.array(z.enum(WORKSHOP_TYPES.map((entry) => entry.value))).optional(),
   level: z.array(z.enum(LEVELS.map((entry) => entry.value))).optional(),
+  instructors: z.array(z.string()).optional(),
   costMin: z.number().optional(),
   costMax: z.number().optional(),
 });
@@ -31,6 +32,7 @@ export type WorkshopsSearch = z.infer<typeof workshopsSearchSchema>;
 export const emptySearch: WorkshopsSearch = {
   type: undefined,
   level: undefined,
+  instructors: undefined,
   costMin: undefined,
   costMax: undefined,
 };
@@ -46,6 +48,10 @@ export function clearSearchParams(
 
   if (search.level?.length === 0) {
     delete search.level;
+  }
+
+  if (search.instructors?.length === 0) {
+    delete search.instructors;
   }
 
   if (search.costMin === COST_MIN) {

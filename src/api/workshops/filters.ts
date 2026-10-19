@@ -14,6 +14,9 @@ export function stringifyFilters(filter?: WorkshopsSearch): string | undefined {
   if (filter.level && filter.level.length > 0) {
     groups.push(anyOfGroup('level', filter.level));
   }
+  if (filter.instructors && filter.instructors.length > 0) {
+    groups.push(anyOfGroup('instructors.id', filter.instructors));
+  }
   if (filter.costMin !== undefined) {
     groups.push(`costAmount >= ${filter.costMin}`);
   }

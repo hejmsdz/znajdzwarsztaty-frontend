@@ -75,7 +75,8 @@ export function MapCanvas() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MarkerClusterGroup showCoverageOnHover={false}>
+        {/* <MarkerClusterGroup key={filtersString} showCoverageOnHover={false}> */}
+        <>
           {(workshops?.items ?? []).map((workshop) => (
             <Marker
               key={workshop.id}
@@ -88,7 +89,8 @@ export function MapCanvas() {
               <MapPopup workshop={workshop} />
             </Marker>
           ))}
-        </MarkerClusterGroup>
+        </>
+        {/* </MarkerClusterGroup> */}
         <MapControls />
       </MapContainer>
     </div>

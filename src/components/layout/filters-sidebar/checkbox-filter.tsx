@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 
 import { Filter } from './filter';
@@ -8,11 +9,15 @@ type CheckboxFilterOption<T extends string = string> = {
   count?: number;
 };
 
-type CheckboxFilterProps<T extends string = string> = {
+type CheckboxFilterProps<
+  T extends string = string,
+  TOption extends CheckboxFilterOption<T> = CheckboxFilterOption<T>,
+> = {
   label: string;
-  options: CheckboxFilterOption<T>[];
+  options: TOption[];
   value: T[];
   onValueChange: (value: T[]) => void;
+  renderOption?: (option: TOption) => ReactNode;
 };
 
 function toggleValue<T>(list: T[], value: T, checked: boolean) {
@@ -20,12 +25,12 @@ function toggleValue<T>(list: T[], value: T, checked: boolean) {
 }
 
 function CheckboxRow({
-  label,
+  content,
   count,
   checked,
   onCheckedChange,
 }: {
-  label: string;
+  content: ReactNode;
   count?: number;
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
@@ -33,7 +38,7 @@ function CheckboxRow({
   return (
     <label className="flex cursor-pointer items-center gap-2.5 rounded-lg px-2 py-1.5 text-sm hover:bg-sidebar-accent">
       <Checkbox checked={checked} onCheckedChange={onCheckedChange} />
-      <span className="flex-1">{label}</span>
+      <span className="flex-1">{content}</span>
       {count !== undefined && (
         <span className="text-xs text-muted-foreground tabular-nums">
           {count}
@@ -43,18 +48,22 @@ function CheckboxRow({
   );
 }
 
-export function CheckboxFilter<T extends string = string>({
+export function CheckboxFilter<
+  T extends string = string,
+  TOption extends CheckboxFilterOption<T> = CheckboxFilterOption<T>,
+>({
   label,
   options,
   value,
   onValueChange,
-}: CheckboxFilterProps<T>) {
+  renderOption,
+}: CheckboxFilterProps<T, TOption>) {
   return (
     <Filter label={label}>
       {options.map((option) => (
         <CheckboxRow
           key={option.value}
-          label={option.label}
+          content={renderOption ? renderOption(option) : option.label}
           count={option.count}
           checked={value.includes(option.value)}
           onCheckedChange={(checked) =>

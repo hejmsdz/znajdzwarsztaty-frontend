@@ -1,3 +1,4 @@
+import { InstructorInfo } from '@/components/instructor-info';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,6 +20,7 @@ import {
   WORKSHOP_TYPES,
 } from '@/filters/types';
 import type { WorkshopsSearch } from '@/filters/types';
+import { useInstructors } from '#/hooks/queries/use-instructors';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
 
 function formatCostLabel({
@@ -50,6 +52,7 @@ function formatCostLabel({
 
 export function FiltersSidebar() {
   const [search, onChange] = useWorkshopsSearchParams();
+  const { data: instructors } = useInstructors();
 
   return (
     <Sidebar
@@ -82,6 +85,21 @@ export function FiltersSidebar() {
           options={LEVELS}
           value={search.level ?? []}
           onValueChange={(level) => onChange({ level })}
+        />
+        <CheckboxFilter
+          label="Prowadzący"
+          options={(instructors ?? []).map((instructor) => ({
+            value: instructor.id,
+            label: instructor.name,
+            instructor,
+          }))}
+          value={search.instructors ?? []}
+          onValueChange={(instructorIds) =>
+            onChange({ instructors: instructorIds })
+          }
+          renderOption={(option) => (
+            <InstructorInfo instructor={option.instructor} />
+          )}
         />
         <SliderFilter
           label="Koszt uczestnictwa (zł)"
