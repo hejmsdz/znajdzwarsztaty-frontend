@@ -14,6 +14,7 @@ export const WORKSHOP_TYPES: { value: WorkshopType; label: string }[] = [
   { value: 'polyphony', label: 'Śpiew wielogłosowy' },
   { value: 'gregorian-chant', label: 'Chorał gregoriański' },
   { value: 'contemporary-worship', label: 'Współczesna muzyka uwielbienia' },
+  { value: 'various-traditions', label: 'Różne tradycje śpiewu' },
   { value: 'orchestral', label: 'Warsztaty orkiestrowe' },
 ];
 

@@ -10,7 +10,11 @@ export interface WorkshopLocation {
 
 export type WorkshopLevel = 'beginner' | 'intermediate' | 'advanced';
 export type WorkshopType =
-  'polyphony' | 'gregorian-chant' | 'contemporary-worship' | 'orchestral';
+  | 'polyphony'
+  | 'gregorian-chant'
+  | 'contemporary-worship'
+  | 'various-traditions'
+  | 'orchestral';
 export type WorkshopDuration = 'one-day' | 'weekend' | 'longer';
 
 export interface Workshop {

@@ -65,15 +65,17 @@ export function FiltersSidebar() {
           <h2 className="font-heading text-base font-semibold tracking-tight">
             Filtry
           </h2>
-          <Badge variant="secondary" className="font-medium tabular-nums">
-            {/* {data ? `${data.totalItems} warsztatów` : '…'} */}
-          </Badge>
+          {Object.keys(search).length > 0 && (
+            <Button
+              variant="link"
+              size="xs"
+              onClick={() => onChange(emptySearch)}
+            >
+              Wyczyść wszystkie
+            </Button>
+          )}
         </div>
-        <p className="text-xs text-muted-foreground">
-          Zawęź wyniki i znajdź warsztaty śpiewu liturgicznego blisko Ciebie.
-        </p>
       </SidebarHeader>
-      <SidebarSeparator />
       <SidebarContent className="px-1 pt-2">
         <CheckboxFilter
           label="Rodzaj warsztatów"
@@ -119,15 +121,6 @@ export function FiltersSidebar() {
           valueLabel={formatCostLabel(search)}
         />
       </SidebarContent>
-      <SidebarFooter className="border-t p-3">
-        <Button
-          variant="outline"
-          className="w-full"
-          onClick={() => onChange(emptySearch)}
-        >
-          Wyczyść filtry
-        </Button>
-      </SidebarFooter>
     </Sidebar>
   );
 }

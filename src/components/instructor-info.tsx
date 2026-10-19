@@ -30,7 +30,7 @@ export function InstructorInfo({ instructor }: InstructorInfoProps) {
       </Avatar>
       <div className="flex flex-col">
         <span className="font-medium">{instructor.name}</span>
-        <span className="text-gray-500 text-xs">
+        <span className="text-muted-foreground text-xs">
           {instructor.specialization}
         </span>
       </div>
