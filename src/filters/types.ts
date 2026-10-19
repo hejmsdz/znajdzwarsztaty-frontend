@@ -1,5 +1,9 @@
 import { z } from 'zod';
-import type { WorkshopLevel, WorkshopType } from '#/api/workshops/workshops';
+import type {
+  WorkshopDuration,
+  WorkshopLevel,
+  WorkshopType,
+} from '#/api/workshops/workshops';
 
 export const COST_MIN = 0;
 export const COST_MAX = 500;
@@ -19,9 +23,16 @@ export const LEVELS: { value: WorkshopLevel; label: string }[] = [
   { value: 'advanced', label: 'Zaawansowany' },
 ];
 
+export const DURATIONS: { value: WorkshopDuration; label: string }[] = [
+  { value: 'one-day', label: 'Jednodniowe' },
+  { value: 'weekend', label: 'Weekendowe' },
+  { value: 'longer', label: 'Dłuższe' },
+];
+
 export const workshopsSearchSchema = z.object({
   type: z.array(z.enum(WORKSHOP_TYPES.map((entry) => entry.value))).optional(),
   level: z.array(z.enum(LEVELS.map((entry) => entry.value))).optional(),
+  duration: z.array(z.enum(DURATIONS.map((entry) => entry.value))).optional(),
   instructors: z.array(z.string()).optional(),
   costMin: z.number().optional(),
   costMax: z.number().optional(),
@@ -32,6 +43,7 @@ export type WorkshopsSearch = z.infer<typeof workshopsSearchSchema>;
 export const emptySearch: WorkshopsSearch = {
   type: undefined,
   level: undefined,
+  duration: undefined,
   instructors: undefined,
   costMin: undefined,
   costMax: undefined,
@@ -48,6 +60,10 @@ export function clearSearchParams(
 
   if (search.level?.length === 0) {
     delete search.level;
+  }
+
+  if (search.duration?.length === 0) {
+    delete search.duration;
   }
 
   if (search.instructors?.length === 0) {

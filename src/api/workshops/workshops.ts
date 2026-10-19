@@ -1,7 +1,7 @@
 import { apiFetch } from '../api';
 import type { Instructor } from '../instructors';
 
-const COLLECTION_PATH = '/api/collections/workshops/records';
+const COLLECTION_PATH = '/api/collections/upcomingWorkshops/records';
 
 export interface WorkshopLocation {
   lat: number;
@@ -11,6 +11,7 @@ export interface WorkshopLocation {
 export type WorkshopLevel = 'beginner' | 'intermediate' | 'advanced';
 export type WorkshopType =
   'polyphony' | 'gregorian-chant' | 'contemporary-worship' | 'orchestral';
+export type WorkshopDuration = 'one-day' | 'weekend' | 'longer';
 
 export interface Workshop {
   id: string;
@@ -20,6 +21,7 @@ export interface Workshop {
   location: WorkshopLocation;
   startTime: string;
   endTime: string;
+  duration: WorkshopDuration;
   level: WorkshopLevel[];
   type: WorkshopType[];
   costAmount: number;

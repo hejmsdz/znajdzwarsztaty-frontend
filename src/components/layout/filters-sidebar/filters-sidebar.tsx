@@ -15,6 +15,7 @@ import {
   COST_MIN,
   COST_STEP,
   COST_TICKS,
+  DURATIONS,
   emptySearch,
   LEVELS,
   WORKSHOP_TYPES,
@@ -79,6 +80,12 @@ export function FiltersSidebar() {
           options={WORKSHOP_TYPES}
           value={search.type ?? []}
           onValueChange={(type) => onChange({ type })}
+        />
+        <CheckboxFilter
+          label="Długość"
+          options={DURATIONS}
+          value={search.duration ?? []}
+          onValueChange={(duration) => onChange({ duration })}
         />
         <CheckboxFilter
           label="Poziom zaawansowania"

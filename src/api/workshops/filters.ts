@@ -27,6 +27,9 @@ export function stringifyFilters(filter?: WorkshopsSearch): string | undefined {
   if (filter.costMax !== undefined) {
     groups.push(`costAmount <= ${filter.costMax}`);
   }
+  if (filter.duration && filter.duration.length > 0) {
+    groups.push(anyOfGroup('duration', filter.duration));
+  }
 
   return groups.length > 0 ? groups.join(' && ') : undefined;
 }
