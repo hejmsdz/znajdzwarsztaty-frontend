@@ -1,4 +1,4 @@
-import { BanknoteIcon, MapPinIcon, PhoneIcon } from 'lucide-react';
+import { BanknoteIcon, MapPinIcon } from 'lucide-react';
 import { Popup } from 'react-leaflet';
 import { cn } from 'cn';
 import type { Workshop } from '#/api/workshops/workshops';
@@ -6,6 +6,7 @@ import { LEVELS, WORKSHOP_TYPES } from '#/filters/types';
 import { Badge } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { ContactLink } from './contact-link';
 import { InstructorInfo } from './instructor-info';
 
 const DATE_FORMATTER = new Intl.DateTimeFormat('pl-PL', {
@@ -120,15 +121,7 @@ export function MapPopup({ workshop }: { workshop: Workshop }) {
             <span className="font-medium">{cost}</span>
           </p>
 
-          {workshop.contactUrl && (
-            <p className="flex items-center gap-2">
-              <PhoneIcon
-                aria-hidden
-                className="size-3.5 shrink-0 text-muted-foreground"
-              />
-              <span className="font-medium">{workshop.contactUrl}</span>
-            </p>
-          )}
+          {workshop.contactUrl && <ContactLink url={workshop.contactUrl} />}
 
           {instructors.length > 0 && (
             <ul className="flex items-start gap-2 flex-col">
