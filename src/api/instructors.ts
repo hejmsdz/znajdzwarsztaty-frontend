@@ -19,8 +19,6 @@ export async function fetchInstructors({
   perPage?: number;
   page?: number;
 }): Promise<PaginatedList<Instructor>> {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-
   const params = new URLSearchParams({
     perPage: `${perPage}`,
     page: `${page}`,
