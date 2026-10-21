@@ -18,6 +18,7 @@ type CheckboxFilterProps<
   value: T[];
   onValueChange: (value: T[]) => void;
   renderOption?: (option: TOption) => ReactNode;
+  children?: ReactNode;
 };
 
 function toggleValue<T>(list: T[], value: T, checked: boolean) {
@@ -57,6 +58,7 @@ export function CheckboxFilter<
   value,
   onValueChange,
   renderOption,
+  children,
 }: CheckboxFilterProps<T, TOption>) {
   return (
     <Filter label={label}>
@@ -71,6 +73,7 @@ export function CheckboxFilter<
           }
         />
       ))}
+      {children}
     </Filter>
   );
 }

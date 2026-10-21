@@ -1,10 +1,13 @@
 import { fetchInstructors } from '#/api/instructors';
 import { queryKeys } from '#/hooks/queries/keys';
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
-export const useInstructors = () => {
+export const useInstructors = (limit: number | undefined) => {
   return useQuery({
-    queryKey: queryKeys.instructors(),
-    queryFn: fetchInstructors,
+    queryKey: limit
+      ? queryKeys.instructorsHead(limit)
+      : queryKeys.instructors(),
+    queryFn: () => fetchInstructors(limit),
+    placeholderData: keepPreviousData,
   });
 };

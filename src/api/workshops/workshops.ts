@@ -1,4 +1,4 @@
-import { apiFetch } from '../api';
+import { apiFetch, MAX_PER_PAGE } from '../api';
 import type { Instructor } from '../instructors';
 
 const COLLECTION_PATH = '/api/collections/upcomingWorkshops/records';
@@ -64,7 +64,7 @@ export async function fetchWorkshop(id: string): Promise<Workshop> {
 
 export async function fetchWorkshops(filter?: string): Promise<WorkshopsData> {
   const params = new URLSearchParams({
-    perPage: '500',
+    perPage: `${MAX_PER_PAGE}`,
     fields: 'id,title,location',
   });
   if (filter) {
