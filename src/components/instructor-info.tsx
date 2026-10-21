@@ -1,6 +1,7 @@
 import { getImageUrl } from '#/api/images';
 import type { Instructor } from '#/api/instructors';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Skeleton } from '@/components/ui/skeleton';
 
 function nameToInitials(fullName: string) {
   return fullName
@@ -33,6 +34,18 @@ export function InstructorInfo({ instructor }: InstructorInfoProps) {
         <span className="text-muted-foreground text-xs">
           {instructor.specialization}
         </span>
+      </div>
+    </div>
+  );
+}
+
+export function InstructorInfoSkeleton() {
+  return (
+    <div className="flex gap-2 items-center">
+      <Skeleton className="size-8 shrink-0 rounded-full" />
+      <div className="flex flex-col gap-1">
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="h-3 w-16" />
       </div>
     </div>
   );

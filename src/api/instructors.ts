@@ -13,11 +13,13 @@ export type Instructor = {
 
 export async function fetchInstructors(
   perPage: number = MAX_PER_PAGE,
-): Promise<Instructor[]> {
+): Promise<{ items: Instructor[]; totalItems: number }> {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   const params = new URLSearchParams({ perPage: `${perPage}` });
-  const data = await apiFetch<{ items: Instructor[] }>(
+  const data = await apiFetch<{ items: Instructor[]; totalItems: number }>(
     `${COLLECTION_PATH}?${params}`,
   );
 
-  return data.items;
+  return { items: data.items, totalItems: data.totalItems };
 }
