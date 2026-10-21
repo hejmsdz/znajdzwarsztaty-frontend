@@ -3,7 +3,7 @@ import type { Instructor } from '../instructors';
 
 const COLLECTION_PATH = '/api/collections/upcomingWorkshops/records';
 
-export interface WorkshopLocation {
+export interface Coordinates {
   lat: number;
   lon: number;
 }
@@ -22,7 +22,7 @@ export interface Workshop {
   title: string;
   venue: string;
   locality: string;
-  location: WorkshopLocation;
+  location: Coordinates;
   startTime: string;
   endTime: string;
   duration: WorkshopDuration;
@@ -41,6 +41,8 @@ export interface Workshop {
   };
 }
 
+export type WorkshopSummary = Pick<Workshop, 'id' | 'title' | 'location'>;
+
 interface WorkshopsResponse {
   page: number;
   perPage: number;
@@ -54,8 +56,17 @@ export interface WorkshopsData {
   totalItems: number;
 }
 
+export async function fetchWorkshop(id: string): Promise<Workshop> {
+  const params = new URLSearchParams({ expand: 'instructors' });
+
+  return apiFetch<Workshop>(`${COLLECTION_PATH}/${id}?${params}`);
+}
+
 export async function fetchWorkshops(filter?: string): Promise<WorkshopsData> {
-  const params = new URLSearchParams({ perPage: '500', expand: 'instructors' });
+  const params = new URLSearchParams({
+    perPage: '500',
+    fields: 'id,title,location',
+  });
   if (filter) {
     params.set('filter', filter);
   }

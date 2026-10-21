@@ -76,18 +76,16 @@ export function MapCanvas() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MarkerClusterGroup showCoverageOnHover={false}>
-          {(workshops?.items ?? []).map((workshop) => (
-            <Marker
-              key={workshop.id}
-              position={[workshop.location.lat, workshop.location.lon]}
-              icon={pinIcon}
-            >
-              <Tooltip direction="top" offset={[0, -18]}>
-                {workshop.title}
-              </Tooltip>
-              <MapPopup workshop={workshop} />
-            </Marker>
-          ))}
+          {(workshops?.items ?? []).map(
+            ({ id, title, location: { lat, lon } }) => (
+              <Marker key={id} position={[lat, lon]} icon={pinIcon}>
+                <Tooltip direction="top" offset={[0, -18]}>
+                  {title}
+                </Tooltip>
+                <MapPopup workshopId={id} />
+              </Marker>
+            ),
+          )}
         </MarkerClusterGroup>
         <MapControls />
       </MapContainer>

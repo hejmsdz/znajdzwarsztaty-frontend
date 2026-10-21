@@ -6,13 +6,15 @@ import {
   GaugeIcon,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { useState } from 'react';
 import { Popup } from 'react-leaflet';
 import { cn } from 'cn';
-import type { Workshop } from '#/api/workshops/workshops';
 import { LEVELS, WORKSHOP_TYPES } from '#/filters/types';
 import { Badge } from '@/components/ui/badge';
 import { buttonVariants } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useWorkshop } from '#/hooks/queries/use-workshop';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ContactLink } from './contact-link';
 import { InstructorInfo } from './instructor-info';
 
@@ -120,7 +122,30 @@ function InfoRow({
   );
 }
 
-export function MapPopup({ workshop }: { workshop: Workshop }) {
+function MapPopupSkeleton() {
+  return (
+    <div className="flex flex-col gap-3 p-4 text-sm">
+      <div className="flex gap-1">
+        <Skeleton className="h-6 w-24 rounded-full" />
+        <Skeleton className="h-6 w-20 rounded-full" />
+      </div>
+      <Skeleton className="h-7 w-3/4" />
+      <div className="flex flex-col gap-2.5">
+        <Skeleton className="h-9 w-full" />
+        <Skeleton className="h-9 w-2/3" />
+        <Skeleton className="h-9 w-1/2" />
+      </div>
+    </div>
+  );
+}
+
+function MapPopupContent({ workshopId }: { workshopId: string }) {
+  const { data: workshop } = useWorkshop(workshopId);
+
+  if (!workshop) {
+    return <MapPopupSkeleton />;
+  }
+
   const dates = formatWorkshopDateRange(workshop.startTime, workshop.endTime);
   const weekdays = formatWorkshopWeekdays(workshop.startTime, workshop.endTime);
   const cost = formatWorkshopCost(workshop.costAmount, workshop.costCurrency);
@@ -137,113 +162,126 @@ export function MapPopup({ workshop }: { workshop: Workshop }) {
   );
 
   return (
+    <div className="flex flex-col gap-3 p-4 text-sm">
+      <div className="flex flex-wrap gap-1">
+        {typeLabels.map((label) => (
+          <Badge key={label} variant="secondary">
+            <MusicIcon />
+            {label}
+          </Badge>
+        ))}
+        {levelLabels.map((label) => (
+          <Badge key={label} variant="secondary">
+            <GaugeIcon />
+            {label}
+          </Badge>
+        ))}
+      </div>
+
+      <h3 className="font-heading text-lg leading-tight font-semibold">
+        {workshop.title}
+      </h3>
+
+      <div className="flex flex-col gap-2.5">
+        <InfoRow
+          icon={CalendarDaysIcon}
+          label="Termin"
+          main={dates}
+          secondary={weekdays}
+        />
+        <InfoRow
+          icon={MapPinIcon}
+          label="Miejsce"
+          main={workshop.locality}
+          secondary={workshop.venue}
+        />
+        <InfoRow icon={WalletIcon} label="Cena" main={cost} />
+      </div>
+
+      {instructors.length > 0 && (
+        <>
+          <Separator />
+          <section className="flex flex-col gap-2">
+            <h3 className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+              Prowadzący
+            </h3>
+            <ul className="flex flex-col gap-2">
+              {instructors.map((instructor) => (
+                <li key={instructor.id}>
+                  <InstructorInfo instructor={instructor} />
+                </li>
+              ))}
+            </ul>
+          </section>
+        </>
+      )}
+
+      {hasActions && (
+        <>
+          <Separator />
+          <div className="flex flex-col gap-2">
+            {(workshop.registerUrl || workshop.infoUrl) && (
+              <div className="flex gap-2">
+                {workshop.registerUrl && (
+                  <a
+                    href={workshop.registerUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={cn(
+                      'flex-1',
+                      buttonVariants({
+                        variant: 'default',
+                        size: 'sm',
+                      }),
+                      'text-white!',
+                    )}
+                  >
+                    Zapisz się
+                  </a>
+                )}
+                {workshop.infoUrl && (
+                  <a
+                    href={workshop.infoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={cn(
+                      buttonVariants({
+                        variant: 'outline',
+                        size: 'sm',
+                      }),
+                    )}
+                  >
+                    Więcej informacji
+                  </a>
+                )}
+                {workshop.contactUrl && (
+                  <ContactLink url={workshop.contactUrl} />
+                )}
+              </div>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+export function MapPopup({ workshopId }: { workshopId: string }) {
+  const [hasOpened, setHasOpened] = useState(false);
+
+  return (
     <Popup
       className="workshop-popup"
       offset={[0, -22]}
       minWidth={320}
       maxWidth={360}
+      eventHandlers={{ add: () => setHasOpened(true) }}
     >
-      <div className="flex flex-col gap-3 p-4 text-sm">
-        <div className="flex flex-wrap gap-1">
-          {typeLabels.map((label) => (
-            <Badge key={label} variant="secondary">
-              <MusicIcon />
-              {label}
-            </Badge>
-          ))}
-          {levelLabels.map((label) => (
-            <Badge key={label} variant="secondary">
-              <GaugeIcon />
-              {label}
-            </Badge>
-          ))}
-        </div>
-
-        <h3 className="font-heading text-lg leading-tight font-semibold">
-          {workshop.title}
-        </h3>
-
-        <div className="flex flex-col gap-2.5">
-          <InfoRow
-            icon={CalendarDaysIcon}
-            label="Termin"
-            main={dates}
-            secondary={weekdays}
-          />
-          <InfoRow
-            icon={MapPinIcon}
-            label="Miejsce"
-            main={workshop.locality}
-            secondary={workshop.venue}
-          />
-          <InfoRow icon={WalletIcon} label="Cena" main={cost} />
-        </div>
-
-        {instructors.length > 0 && (
-          <>
-            <Separator />
-            <section className="flex flex-col gap-2">
-              <h3 className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                Prowadzący
-              </h3>
-              <ul className="flex flex-col gap-2">
-                {instructors.map((instructor) => (
-                  <li key={instructor.id}>
-                    <InstructorInfo instructor={instructor} />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </>
-        )}
-
-        {hasActions && (
-          <>
-            <Separator />
-            <div className="flex flex-col gap-2">
-              {(workshop.registerUrl || workshop.infoUrl) && (
-                <div className="flex gap-2">
-                  {workshop.registerUrl && (
-                    <a
-                      href={workshop.registerUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={cn(
-                        'flex-1',
-                        buttonVariants({
-                          variant: 'default',
-                          size: 'sm',
-                        }),
-                        'text-white!',
-                      )}
-                    >
-                      Zapisz się
-                    </a>
-                  )}
-                  {workshop.infoUrl && (
-                    <a
-                      href={workshop.infoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className={cn(
-                        buttonVariants({
-                          variant: 'outline',
-                          size: 'sm',
-                        }),
-                      )}
-                    >
-                      Więcej informacji
-                    </a>
-                  )}
-                  {workshop.contactUrl && (
-                    <ContactLink url={workshop.contactUrl} />
-                  )}
-                </div>
-              )}
-            </div>
-          </>
-        )}
-      </div>
+      {hasOpened ? (
+        <MapPopupContent workshopId={workshopId} />
+      ) : (
+        <MapPopupSkeleton />
+      )}
     </Popup>
   );
 }
