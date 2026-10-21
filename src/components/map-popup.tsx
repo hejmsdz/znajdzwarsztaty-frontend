@@ -1,4 +1,11 @@
-import { BanknoteIcon, MapPinIcon } from 'lucide-react';
+import {
+  WalletIcon,
+  CalendarDaysIcon,
+  MapPinIcon,
+  MusicIcon,
+  GaugeIcon,
+} from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { Popup } from 'react-leaflet';
 import { cn } from 'cn';
 import type { Workshop } from '#/api/workshops/workshops';
@@ -13,6 +20,10 @@ const DATE_FORMATTER = new Intl.DateTimeFormat('pl-PL', {
   day: 'numeric',
   month: 'long',
   year: 'numeric',
+});
+
+const WEEKDAY_FORMATTER = new Intl.DateTimeFormat('pl-PL', {
+  weekday: 'long',
 });
 
 function parseWorkshopDate(value: string): Date | null {
@@ -47,6 +58,22 @@ function formatWorkshopDateRange(startTime: string, endTime: string): string {
   return `${DATE_FORMATTER.format(start)} – ${DATE_FORMATTER.format(end)}`;
 }
 
+function formatWorkshopWeekdays(
+  startTime: string,
+  endTime: string,
+): string | null {
+  const start = parseWorkshopDate(startTime);
+  if (!start) {
+    return null;
+  }
+
+  const end = parseWorkshopDate(endTime) ?? start;
+  const startDay = WEEKDAY_FORMATTER.format(start);
+  const endDay = WEEKDAY_FORMATTER.format(end);
+
+  return startDay === endDay ? startDay : `${startDay} – ${endDay}`;
+}
+
 function formatWorkshopCost(amount: number, currency: string): string {
   if (amount === 0) {
     return 'Bezpłatne';
@@ -63,8 +90,39 @@ function formatWorkshopCost(amount: number, currency: string): string {
   }
 }
 
+function InfoRow({
+  icon: Icon,
+  label,
+  main,
+  secondary,
+}: {
+  icon: LucideIcon;
+  label?: string;
+  main: string;
+  secondary?: string | null;
+}) {
+  return (
+    <div className="flex gap-2.5">
+      <Icon
+        aria-hidden
+        className="mt-0.5 size-4 shrink-0 text-muted-foreground"
+      />
+      <span className="sr-only">{label}</span>
+      <div className="flex flex-col gap-0.5">
+        <span className="leading-tight font-medium">{main}</span>
+        {secondary ? (
+          <span className="text-muted-foreground text-xs leading-tight">
+            {secondary}
+          </span>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 export function MapPopup({ workshop }: { workshop: Workshop }) {
   const dates = formatWorkshopDateRange(workshop.startTime, workshop.endTime);
+  const weekdays = formatWorkshopWeekdays(workshop.startTime, workshop.endTime);
   const cost = formatWorkshopCost(workshop.costAmount, workshop.costCurrency);
   const instructors = workshop.expand?.instructors?.filter(Boolean) ?? [];
   const typeLabels = workshop.type.map(
@@ -86,90 +144,101 @@ export function MapPopup({ workshop }: { workshop: Workshop }) {
       maxWidth={360}
     >
       <div className="flex flex-col gap-3 p-4 text-sm">
-        <div className="flex flex-col gap-1">
-          <p className="text-primary text-xs font-bold uppercase">{dates}</p>
-          <h3 className="font-heading text-base leading-snug font-semibold pe-5">
-            {workshop.title}
-          </h3>
-          <p className="flex items-center gap-1.5 text-muted-foreground">
-            <MapPinIcon aria-hidden className="size-3.5 shrink-0" />
-            <span>
-              {workshop.locality} &middot; {workshop.venue}
-            </span>
-          </p>
-        </div>
-
         <div className="flex flex-wrap gap-1">
           {typeLabels.map((label) => (
             <Badge key={label} variant="secondary">
+              <MusicIcon />
               {label}
             </Badge>
           ))}
           {levelLabels.map((label) => (
-            <Badge key={label} variant="outline">
+            <Badge key={label} variant="secondary">
+              <GaugeIcon />
               {label}
             </Badge>
           ))}
         </div>
 
-        <div className="flex flex-col gap-1.5">
-          <p className="flex items-center gap-2">
-            <BanknoteIcon
-              aria-hidden
-              className="size-3.5 shrink-0 text-muted-foreground"
-            />
-            <span className="font-medium">{cost}</span>
-          </p>
+        <h3 className="font-heading text-lg leading-tight font-semibold">
+          {workshop.title}
+        </h3>
 
-          {workshop.contactUrl && <ContactLink url={workshop.contactUrl} />}
-
-          {instructors.length > 0 && (
-            <ul className="flex items-start gap-2 flex-col">
-              {instructors.map((instructor) => (
-                <li key={instructor.id}>
-                  <InstructorInfo instructor={instructor} />
-                </li>
-              ))}
-            </ul>
-          )}
+        <div className="flex flex-col gap-2.5">
+          <InfoRow
+            icon={CalendarDaysIcon}
+            label="Termin"
+            main={dates}
+            secondary={weekdays}
+          />
+          <InfoRow
+            icon={MapPinIcon}
+            label="Miejsce"
+            main={workshop.locality}
+            secondary={workshop.venue}
+          />
+          <InfoRow icon={WalletIcon} label="Cena" main={cost} />
         </div>
+
+        {instructors.length > 0 && (
+          <>
+            <Separator />
+            <section className="flex flex-col gap-2">
+              <h3 className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+                Prowadzący
+              </h3>
+              <ul className="flex flex-col gap-2">
+                {instructors.map((instructor) => (
+                  <li key={instructor.id}>
+                    <InstructorInfo instructor={instructor} />
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </>
+        )}
 
         {hasActions && (
           <>
             <Separator />
-            <div className="flex gap-2">
-              {workshop.registerUrl && (
-                <a
-                  href={workshop.registerUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={cn(
-                    'flex-1',
-                    buttonVariants({
-                      variant: 'default',
-                      size: 'sm',
-                    }),
-                    'text-white!',
+            <div className="flex flex-col gap-2">
+              {(workshop.registerUrl || workshop.infoUrl) && (
+                <div className="flex gap-2">
+                  {workshop.registerUrl && (
+                    <a
+                      href={workshop.registerUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cn(
+                        'flex-1',
+                        buttonVariants({
+                          variant: 'default',
+                          size: 'sm',
+                        }),
+                        'text-white!',
+                      )}
+                    >
+                      Zapisz się
+                    </a>
                   )}
-                >
-                  Zapisz się
-                </a>
-              )}
-              {workshop.infoUrl && (
-                <a
-                  href={workshop.infoUrl}
-                  className={cn(
-                    'flex-1',
-                    buttonVariants({
-                      variant: 'outline',
-                      size: 'sm',
-                    }),
+                  {workshop.infoUrl && (
+                    <a
+                      href={workshop.infoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={cn(
+                        buttonVariants({
+                          variant: 'outline',
+                          size: 'sm',
+                        }),
+                      )}
+                    >
+                      Więcej informacji
+                    </a>
                   )}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Więcej informacji
-                </a>
+                  {workshop.contactUrl && (
+                    <ContactLink url={workshop.contactUrl} />
+                  )}
+                </div>
               )}
             </div>
           </>

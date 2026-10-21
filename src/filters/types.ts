@@ -20,7 +20,7 @@ export const WORKSHOP_TYPES: { value: WorkshopType; label: string }[] = [
 
 export const LEVELS: { value: WorkshopLevel; label: string }[] = [
   { value: 'beginner', label: 'Początkujący' },
-  { value: 'intermediate', label: 'Średniozaawansowany' },
+  { value: 'intermediate', label: 'Średnio zaawansowany' },
   { value: 'advanced', label: 'Zaawansowany' },
 ];
 

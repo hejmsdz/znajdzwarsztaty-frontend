@@ -1,5 +1,7 @@
+import { cn } from 'cn';
 import { MessageCircleQuestionIcon, MailIcon, PhoneIcon } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { buttonVariants } from './ui/button';
 
 type ContactLinkProps = {
   url: string;
@@ -35,15 +37,19 @@ export function ContactLink({ url }: ContactLinkProps) {
   const Icon = CONTACT_ICONS[kind];
 
   return (
-    <p className="flex items-center gap-2">
-      <Icon aria-hidden className="size-3.5 shrink-0 text-muted-foreground" />
-      <a
-        href={url}
-        {...(kind === 'web' ? { target: '_blank', rel: 'noreferrer' } : {})}
-        className="font-medium"
-      >
-        {formatContactText(url)}
-      </a>
-    </p>
+    <a
+      href={url}
+      target="_blank"
+      rel="noreferrer"
+      title="Kontakt"
+      className={cn(
+        buttonVariants({
+          variant: 'outline',
+          size: 'icon-sm',
+        }),
+      )}
+    >
+      <Icon aria-hidden />
+    </a>
   );
 }
