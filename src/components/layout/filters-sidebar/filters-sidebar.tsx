@@ -78,6 +78,17 @@ export function FiltersSidebar() {
           value={search.type ?? []}
           onValueChange={(type) => onChange({ type })}
         />
+        <InstructorsFilter />
+        <SliderFilter
+          label="Koszt uczestnictwa (zł)"
+          min={COST_MIN}
+          max={COST_MAX}
+          step={COST_STEP}
+          value={[search.costMin ?? COST_MIN, search.costMax ?? COST_MAX]}
+          onValueChange={([costMin, costMax]) => onChange({ costMin, costMax })}
+          ticks={COST_TICKS}
+          valueLabel={formatCostLabel(search)}
+        />
         <CheckboxFilter
           label="Długość"
           options={DURATIONS}
@@ -89,17 +100,6 @@ export function FiltersSidebar() {
           options={LEVELS}
           value={search.level ?? []}
           onValueChange={(level) => onChange({ level })}
-        />
-        <InstructorsFilter />
-        <SliderFilter
-          label="Koszt uczestnictwa (zł)"
-          min={COST_MIN}
-          max={COST_MAX}
-          step={COST_STEP}
-          value={[search.costMin ?? COST_MIN, search.costMax ?? COST_MAX]}
-          onValueChange={([costMin, costMax]) => onChange({ costMin, costMax })}
-          ticks={COST_TICKS}
-          valueLabel={formatCostLabel(search)}
         />
       </SidebarContent>
     </Sidebar>
