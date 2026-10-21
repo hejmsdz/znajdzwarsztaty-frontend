@@ -5,10 +5,10 @@ import { queryKeys } from '#/hooks/queries/keys';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
 export const useWorkshops = (search: WorkshopsSearch) => {
-  const filtersString = stringifyFilters(search);
+  const filterString = stringifyFilters(search);
   return useQuery({
-    queryKey: queryKeys.workshops(filtersString),
-    queryFn: () => fetchWorkshops(filtersString),
+    queryKey: queryKeys.workshops(filterString),
+    queryFn: () => fetchWorkshops({ filter: filterString }),
     placeholderData: keepPreviousData,
   });
 };

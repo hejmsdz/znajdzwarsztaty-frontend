@@ -1,4 +1,5 @@
 import { apiFetch, MAX_PER_PAGE } from '../api';
+import type { PaginatedList } from '../api';
 import type { Instructor } from '../instructors';
 
 const COLLECTION_PATH = '/api/collections/upcomingWorkshops/records';
@@ -43,26 +44,17 @@ export interface Workshop {
 
 export type WorkshopSummary = Pick<Workshop, 'id' | 'title' | 'location'>;
 
-interface WorkshopsResponse {
-  page: number;
-  perPage: number;
-  totalItems: number;
-  totalPages: number;
-  items: Workshop[];
-}
-
-export interface WorkshopsData {
-  items: Workshop[];
-  totalItems: number;
-}
-
 export async function fetchWorkshop(id: string): Promise<Workshop> {
   const params = new URLSearchParams({ expand: 'instructors' });
 
   return apiFetch<Workshop>(`${COLLECTION_PATH}/${id}?${params}`);
 }
 
-export async function fetchWorkshops(filter?: string): Promise<WorkshopsData> {
+export async function fetchWorkshops({
+  filter,
+}: {
+  filter?: string;
+}): Promise<PaginatedList<Workshop>> {
   const params = new URLSearchParams({
     perPage: `${MAX_PER_PAGE}`,
     fields: 'id,title,location',
@@ -71,12 +63,9 @@ export async function fetchWorkshops(filter?: string): Promise<WorkshopsData> {
     params.set('filter', filter);
   }
 
-  const data = await apiFetch<WorkshopsResponse>(
+  const data = await apiFetch<PaginatedList<Workshop>>(
     `${COLLECTION_PATH}?${params}`,
   );
 
-  return {
-    items: data.items,
-    totalItems: data.totalItems,
-  };
+  return data;
 }
