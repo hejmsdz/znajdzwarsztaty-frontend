@@ -1,6 +1,7 @@
 import L from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { LocateFixedIcon, MinusIcon, PlusIcon } from 'lucide-react';
+
 import {
   MapContainer,
   Marker,
@@ -16,7 +17,7 @@ import { Button } from '@/components/ui/button';
 const MAP_CENTER: [number, number] = [52.06, 19.48];
 const DEFAULT_ZOOM = 6;
 
-const PIN_HTML = `<span class="flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg ring-4 ring-primary/20"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><path d="M9 18V5l12-2v13"/><circle cx="9" cy="18" r="3"/><circle cx="21" cy="16" r="3"/></svg></span>`;
+const PIN_HTML = `<span class="flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg ring-4 ring-primary/20"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 6-5.2-3.9a.5.5 0 0 0-.8.4V18"/><circle cx="9" cy="18" r="4"/></svg></span>`;
 
 const pinIcon = L.divIcon({
   className: '',
