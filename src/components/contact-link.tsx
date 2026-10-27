@@ -25,13 +25,6 @@ function getContactKind(url: string): ContactKind {
   return 'web';
 }
 
-function formatContactText(url: string): string {
-  if (/^https?:\/\//i.test(url)) {
-    return url.replace(/^https?:\/\//i, '').replace(/\/$/, '');
-  }
-  return url.replace(/^(mailto|tel):/i, '');
-}
-
 export function ContactLink({ url }: ContactLinkProps) {
   const kind = getContactKind(url);
   const Icon = CONTACT_ICONS[kind];

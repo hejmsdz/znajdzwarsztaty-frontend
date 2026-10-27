@@ -48,7 +48,7 @@ function formatCostLabel({
 }
 
 export function FiltersSidebar() {
-  const [search, onChange] = useWorkshopsSearchParams();
+  const [{ page, ...search }, onChange] = useWorkshopsSearchParams();
 
   return (
     <Sidebar
