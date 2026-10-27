@@ -50,14 +50,35 @@ export async function fetchWorkshop(id: string): Promise<Workshop> {
   return apiFetch<Workshop>(`${COLLECTION_PATH}/${id}?${params}`);
 }
 
-export async function fetchWorkshops({
+export async function fetchWorkshopsSummary({
+  filter,
+}: {
+  filter?: string;
+}): Promise<PaginatedList<WorkshopSummary>> {
+  const params = new URLSearchParams({
+    perPage: `${MAX_PER_PAGE}`,
+    fields: 'id,title,location',
+  });
+  if (filter) {
+    params.set('filter', filter);
+  }
+
+  const data = await apiFetch<PaginatedList<WorkshopSummary>>(
+    `${COLLECTION_PATH}?${params}`,
+  );
+
+  return data;
+}
+
+export async function fetchWorkshopsFull({
   filter,
 }: {
   filter?: string;
 }): Promise<PaginatedList<Workshop>> {
   const params = new URLSearchParams({
     perPage: `${MAX_PER_PAGE}`,
-    fields: 'id,title,location',
+    sort: 'startTime',
+    expand: 'instructors',
   });
   if (filter) {
     params.set('filter', filter);

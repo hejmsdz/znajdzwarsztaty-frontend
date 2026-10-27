@@ -1,8 +1,6 @@
-import { MusicIcon, MapPinIcon } from 'lucide-react';
-
+import { ListIcon, MapPinIcon, MusicIcon } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-
 import { MenuItem } from './menu-item';
 
 export function TopBar() {
@@ -24,8 +22,9 @@ export function TopBar() {
       </div>
 
       <nav className="h-full flex text-sm">
-        <ul>
-          <MenuItem href="/" icon={MapPinIcon} label="Mapa" current />
+        <ul className="flex gap-4">
+          <MenuItem to="/" icon={MapPinIcon} label="Mapa" />
+          <MenuItem to="/lista" icon={ListIcon} label="Lista" />
         </ul>
       </nav>
     </header>
