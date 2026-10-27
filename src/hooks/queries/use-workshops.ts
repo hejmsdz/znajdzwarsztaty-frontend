@@ -19,8 +19,9 @@ export const useWorkshops = (search: WorkshopsSearch) => {
 export const useWorkshopsList = (search: WorkshopsSearch) => {
   const filterString = stringifyFilters(search);
   return useQuery({
-    queryKey: queryKeys.workshopsFull(filterString),
-    queryFn: () => fetchWorkshopsFull({ filter: filterString }),
+    queryKey: queryKeys.workshopsFull(filterString, search.page),
+    queryFn: () =>
+      fetchWorkshopsFull({ filter: filterString, page: search.page }),
     placeholderData: keepPreviousData,
   });
 };

@@ -1,8 +1,8 @@
 export const queryKeys = {
   workshopsSummary: (filtersString?: string) =>
     ['workshops', 'summary', filtersString] as const,
-  workshopsFull: (filtersString?: string) =>
-    ['workshops', 'full', filtersString] as const,
+  workshopsFull: (filtersString?: string, page?: number) =>
+    ['workshops', 'full', filtersString, page ?? 1] as const,
   workshop: (id: string) => ['workshop', id] as const,
   instructorsHead: (limit: number) => ['instructors', 'head', limit] as const,
   instructorsPages: (headNumItems: number, pageSize: number) =>

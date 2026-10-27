@@ -70,13 +70,18 @@ export async function fetchWorkshopsSummary({
   return data;
 }
 
+export const WORKSHOPS_PER_PAGE = 10;
+
 export async function fetchWorkshopsFull({
   filter,
+  page,
 }: {
   filter?: string;
+  page?: number;
 }): Promise<PaginatedList<Workshop>> {
   const params = new URLSearchParams({
-    perPage: `${MAX_PER_PAGE}`,
+    perPage: `${WORKSHOPS_PER_PAGE}`,
+    page: `${page ?? 1}`,
     sort: 'startTime',
     expand: 'instructors',
   });

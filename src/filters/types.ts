@@ -37,6 +37,7 @@ export const workshopsSearchSchema = z.object({
   instructors: z.array(z.string()).optional(),
   costMin: z.number().optional(),
   costMax: z.number().optional(),
+  page: z.number().int().min(1).optional(),
 });
 
 export type WorkshopsSearch = z.infer<typeof workshopsSearchSchema>;
@@ -48,6 +49,7 @@ export const emptySearch: WorkshopsSearch = {
   instructors: undefined,
   costMin: undefined,
   costMax: undefined,
+  page: undefined,
 };
 
 export function clearSearchParams(

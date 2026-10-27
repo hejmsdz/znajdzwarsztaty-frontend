@@ -22,7 +22,12 @@ export function useWorkshopsSearchParams(): [WorkshopsSearch, Updater] {
   const updateSearch = (patch: Patch) => {
     void navigate({
       to: getWorkshopsRoute(pathname),
-      search: (prev) => clearSearchParams({ ...prev, ...patch }),
+      search: (prev) =>
+        clearSearchParams({
+          ...prev,
+          ...patch,
+          page: patch.page ?? undefined,
+        }),
       replace: true,
     });
   };
