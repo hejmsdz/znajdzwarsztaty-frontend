@@ -16,11 +16,11 @@ import {
   DURATIONS,
   emptySearch,
   LEVELS,
-  VOIVODESHIPS,
   WORKSHOP_TYPES,
 } from '@/filters/types';
 import type { WorkshopsSearch } from '@/filters/types';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
+import { useVoivodeships } from '#/hooks/queries/use-voivodeships';
 
 function formatCostLabel({
   costMin = COST_MIN,
@@ -56,6 +56,8 @@ type FiltersSidebarProps = {
 export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
   const [{ page, ...search }, onChange] = useWorkshopsSearchParams();
 
+  const voivodeships = useVoivodeships(showVoivodeshipFilter ?? false);
+
   return (
     <Sidebar
       collapsible="none"
@@ -81,7 +83,7 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
         {showVoivodeshipFilter && (
           <SelectFilter
             label="Województwo"
-            options={VOIVODESHIPS}
+            options={voivodeships}
             value={search.voivodeship}
             onValueChange={(voivodeship) => onChange({ voivodeship })}
             allLabel="Wszystkie"
