@@ -42,7 +42,9 @@ export function SliderFilter({
           aria-hidden
         >
           {ticks.map((tick) => (
-            <span key={tick}>{tick}</span>
+            <span className="min-w-[3ch]" key={tick}>
+              {tick}
+            </span>
           ))}
         </div>
       )}
