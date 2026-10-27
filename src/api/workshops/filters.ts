@@ -26,6 +26,9 @@ export function stringifyFilters(filter?: WorkshopsSearch): string | undefined {
   if (filter.duration && filter.duration.length > 0) {
     groups.push(anyOfGroup('duration', filter.duration));
   }
+  if (filter.voivodeship) {
+    groups.push(`voivodeship = '${filter.voivodeship}'`);
+  }
 
   return groups.length > 0 ? groups.join(' && ') : undefined;
 }

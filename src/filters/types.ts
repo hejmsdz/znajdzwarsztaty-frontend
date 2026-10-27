@@ -10,6 +10,25 @@ export const COST_MAX = 500;
 export const COST_STEP = 50;
 export const COST_TICKS = ['0', '100', '200', '300', '400', '500+'];
 
+export const VOIVODESHIPS: { value: string; label: string }[] = [
+  { value: 'ds', label: 'dolnośląskie' },
+  { value: 'kp', label: 'kujawsko-pomorskie' },
+  { value: 'lu', label: 'lubelskie' },
+  { value: 'lb', label: 'lubuskie' },
+  { value: 'ld', label: 'łódzkie' },
+  { value: 'ma', label: 'małopolskie' },
+  { value: 'mz', label: 'mazowieckie' },
+  { value: 'op', label: 'opolskie' },
+  { value: 'pk', label: 'podkarpackie' },
+  { value: 'pd', label: 'podlaskie' },
+  { value: 'pm', label: 'pomorskie' },
+  { value: 'sl', label: 'śląskie' },
+  { value: 'sk', label: 'świętokrzyskie' },
+  { value: 'wn', label: 'warmińsko-mazurskie' },
+  { value: 'wp', label: 'wielkopolskie' },
+  { value: 'zp', label: 'zachodniopomorskie' },
+];
+
 export const WORKSHOP_TYPES: { value: WorkshopType; label: string }[] = [
   { value: 'polyphony', label: 'Śpiew wielogłosowy' },
   { value: 'gregorian-chant', label: 'Chorał gregoriański' },
@@ -34,6 +53,7 @@ export const workshopsSearchSchema = z.object({
   type: z.array(z.enum(WORKSHOP_TYPES.map((entry) => entry.value))).optional(),
   level: z.array(z.enum(LEVELS.map((entry) => entry.value))).optional(),
   duration: z.array(z.enum(DURATIONS.map((entry) => entry.value))).optional(),
+  voivodeship: z.enum(VOIVODESHIPS.map((entry) => entry.value)).optional(),
   instructors: z.array(z.string()).optional(),
   costMin: z.number().optional(),
   costMax: z.number().optional(),
@@ -46,6 +66,7 @@ export const emptySearch: WorkshopsSearch = {
   type: undefined,
   level: undefined,
   duration: undefined,
+  voivodeship: undefined,
   instructors: undefined,
   costMin: undefined,
   costMax: undefined,

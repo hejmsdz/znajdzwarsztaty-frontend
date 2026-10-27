@@ -6,6 +6,7 @@ import {
 } from '@/components/ui/sidebar';
 import { CheckboxFilter } from './checkbox-filter';
 import { InstructorsFilter } from './instructors-filter';
+import { SelectFilter } from './select-filter';
 import { SliderFilter } from './slider-filter';
 import {
   COST_MAX,
@@ -15,6 +16,7 @@ import {
   DURATIONS,
   emptySearch,
   LEVELS,
+  VOIVODESHIPS,
   WORKSHOP_TYPES,
 } from '@/filters/types';
 import type { WorkshopsSearch } from '@/filters/types';
@@ -47,7 +49,11 @@ function formatCostLabel({
   return `${costMin} – ${costMax} zł`;
 }
 
-export function FiltersSidebar() {
+type FiltersSidebarProps = {
+  showVoivodeshipFilter?: boolean;
+};
+
+export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
   const [{ page, ...search }, onChange] = useWorkshopsSearchParams();
 
   return (
@@ -72,6 +78,15 @@ export function FiltersSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent className="px-1 pt-2">
+        {showVoivodeshipFilter && (
+          <SelectFilter
+            label="Województwo"
+            options={VOIVODESHIPS}
+            value={search.voivodeship}
+            onValueChange={(voivodeship) => onChange({ voivodeship })}
+            allLabel="Wszystkie"
+          />
+        )}
         <CheckboxFilter
           label="Rodzaj warsztatów"
           options={WORKSHOP_TYPES}

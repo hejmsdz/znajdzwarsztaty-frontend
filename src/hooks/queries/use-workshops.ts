@@ -8,7 +8,8 @@ import { queryKeys } from '#/hooks/queries/keys';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
 export const useWorkshops = (search: WorkshopsSearch) => {
-  const filterString = stringifyFilters(search);
+  const { voivodeship, ...restFilters } = search;
+  const filterString = stringifyFilters(restFilters);
   return useQuery({
     queryKey: queryKeys.workshopsSummary(filterString),
     queryFn: () => fetchWorkshopsSummary({ filter: filterString }),
