@@ -75,6 +75,10 @@ function formatWorkshopWeekdays(
 }
 
 function formatWorkshopCost(amount: number, currency: string): string {
+  if (amount < 0) {
+    return '';
+  }
+
   if (amount === 0) {
     return 'Bezpłatne';
   }
@@ -200,7 +204,9 @@ export function WorkshopDetails({
         main={workshop.locality}
         secondary={workshop.venue}
       />
-      <InfoRow icon={WalletIcon} label="Cena" main={cost} />
+      {workshop.costAmount >= 0 && (
+        <InfoRow icon={WalletIcon} label="Cena" main={cost} />
+      )}
     </div>
   );
 
@@ -272,7 +278,10 @@ export function WorkshopDetails({
         <>
           <Separator />
           <div className="flex flex-col gap-2">
-            {(workshop.registerUrl || workshop.infoUrl) && actionsRow}
+            {(workshop.registerUrl ||
+              workshop.infoUrl ||
+              workshop.contactUrl) &&
+              actionsRow}
           </div>
         </>
       )}
