@@ -25,7 +25,14 @@ export function InstructorInfo({ instructor }: InstructorInfoProps) {
             instructor.collectionId,
             instructor.id,
             instructor.photo,
+            '32x32',
           )}
+          srcSet={`${getImageUrl(
+            instructor.collectionId,
+            instructor.id,
+            instructor.photo,
+            '64x64',
+          )} 2x`}
         />
         <AvatarFallback>{nameToInitials(instructor.name)}</AvatarFallback>
       </Avatar>
