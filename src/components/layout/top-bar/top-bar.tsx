@@ -24,7 +24,7 @@ export function TopBar() {
       <nav className="h-full flex text-sm">
         <ul className="flex gap-4">
           <MenuItem to="/" icon={MapPinIcon} label="Mapa" />
-          <MenuItem to="/lista" icon={ListIcon} label="Lista" />
+          <MenuItem to="/list" icon={ListIcon} label="Lista" />
         </ul>
       </nav>
     </header>

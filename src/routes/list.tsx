@@ -6,7 +6,7 @@ import { TopBar } from '@/components/layout/top-bar/top-bar';
 import { WorkshopList } from '@/components/layout/workshop-list/workshop-list';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 
-export const Route = createFileRoute('/lista')({
+export const Route = createFileRoute('/list')({
   component: ListPage,
   validateSearch: workshopsSearchSchema,
 });
