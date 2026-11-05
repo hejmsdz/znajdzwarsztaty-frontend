@@ -133,6 +133,10 @@
   }
 }
 
+.leaflet-pane {
+  z-index: 1;
+}
+
 .workshop-popup {
   .leaflet-popup-content-wrapper {
     @apply rounded-2xl bg-card shadow-xl;
