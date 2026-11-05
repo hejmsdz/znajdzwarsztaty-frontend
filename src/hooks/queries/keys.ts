@@ -8,4 +8,5 @@ export const queryKeys = {
   instructorsHead: (limit: number) => ['instructors', 'head', limit] as const,
   instructorsPages: (headNumItems: number, pageSize: number) =>
     ['instructors', 'pages', headNumItems, pageSize] as const,
+  citiesByLetter: (letter: string) => ['cities', letter] as const,
 } as const;
