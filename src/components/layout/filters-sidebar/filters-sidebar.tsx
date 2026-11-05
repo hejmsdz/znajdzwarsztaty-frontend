@@ -21,6 +21,8 @@ import {
 import type { WorkshopsSearch } from '@/filters/types';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
 import { useVoivodeships } from '#/hooks/queries/use-voivodeships';
+import { Input } from '#/components/ui/input';
+import { Filter } from './filter';
 
 function formatCostLabel({
   costMin = COST_MIN,
@@ -79,7 +81,14 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
           )}
         </div>
       </SidebarHeader>
-      <SidebarContent className="px-1 pt-2">
+      <SidebarContent className="px-1 pt-0">
+        <Filter label="Szukaj">
+          <Input
+            value={search.text || ''}
+            onChange={(event) => onChange({ text: event.target.value })}
+            placeholder="Tytuł albo miejsce warsztatów"
+          />
+        </Filter>
         {showVoivodeshipFilter && (
           <SelectFilter
             label="Województwo"
@@ -89,12 +98,6 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
             allLabel="Wszystkie"
           />
         )}
-        <CheckboxFilter
-          label="Rodzaj warsztatów"
-          options={WORKSHOP_TYPES}
-          value={search.type ?? []}
-          onValueChange={(type) => onChange({ type })}
-        />
         <InstructorsFilter />
         <SliderFilter
           label="Koszt uczestnictwa (zł)"
@@ -105,6 +108,12 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
           onValueChange={([costMin, costMax]) => onChange({ costMin, costMax })}
           ticks={COST_TICKS}
           valueLabel={formatCostLabel(search)}
+        />
+        <CheckboxFilter
+          label="Rodzaj warsztatów"
+          options={WORKSHOP_TYPES}
+          value={search.type ?? []}
+          onValueChange={(type) => onChange({ type })}
         />
         <CheckboxFilter
           label="Długość"

@@ -1,4 +1,4 @@
-import { anyOfGroup } from '../filters';
+import { anyFieldLike, anyOfGroup } from '../filters';
 import type { WorkshopsSearch } from '#/filters/types';
 
 export function stringifyFilters(filter?: WorkshopsSearch): string | undefined {
@@ -8,6 +8,9 @@ export function stringifyFilters(filter?: WorkshopsSearch): string | undefined {
 
   const groups: string[] = [];
 
+  if (filter.text && filter.text.trim().length > 0) {
+    groups.push(anyFieldLike(['title', 'venue', 'locality'], filter.text));
+  }
   if (filter.type && filter.type.length > 0) {
     groups.push(anyOfGroup('type', filter.type));
   }

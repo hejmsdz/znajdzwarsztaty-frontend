@@ -50,6 +50,7 @@ export const DURATIONS: { value: WorkshopDuration; label: string }[] = [
 ];
 
 export const workshopsSearchSchema = z.object({
+  text: z.string().optional(),
   type: z.array(z.enum(WORKSHOP_TYPES.map((entry) => entry.value))).optional(),
   level: z.array(z.enum(LEVELS.map((entry) => entry.value))).optional(),
   duration: z.array(z.enum(DURATIONS.map((entry) => entry.value))).optional(),
@@ -77,6 +78,10 @@ export function clearSearchParams(
   searchToClear: WorkshopsSearch,
 ): WorkshopsSearch {
   const search = { ...searchToClear };
+
+  if (!search.text) {
+    delete search.text;
+  }
 
   if (search.type?.length === 0) {
     delete search.type;

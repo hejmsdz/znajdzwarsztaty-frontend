@@ -14,7 +14,7 @@ type FilterProps = {
 
 export function Filter({ label, children, contentClassName }: FilterProps) {
   return (
-    <SidebarGroup>
+    <SidebarGroup className="pt-0">
       <SidebarGroupLabel>{label}</SidebarGroupLabel>
       <SidebarGroupContent className={contentClassName}>
         {children}
