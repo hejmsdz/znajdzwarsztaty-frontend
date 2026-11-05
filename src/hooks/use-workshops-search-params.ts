@@ -5,7 +5,7 @@ import type { WorkshopsSearch } from '#/filters/types';
 type Patch = Partial<WorkshopsSearch>;
 type Updater = (patch: Patch) => void;
 
-const WORKSHOPS_ROUTES = ['/', '/lista'] as const;
+const WORKSHOPS_ROUTES = ['/', '/list'] as const;
 type WorkshopsRoute = (typeof WORKSHOPS_ROUTES)[number];
 
 function getWorkshopsRoute(pathname: string): WorkshopsRoute {
