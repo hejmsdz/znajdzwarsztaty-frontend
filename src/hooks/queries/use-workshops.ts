@@ -6,10 +6,16 @@ import {
 import type { WorkshopsSearch } from '#/filters/types';
 import { queryKeys } from '#/hooks/queries/keys';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { useDebouncedValue } from '../use-debounced-value';
+
+const debounceDelayMs = 400;
 
 export const useWorkshops = (search: WorkshopsSearch) => {
-  const { voivodeship, ...restFilters } = search;
-  const filterString = stringifyFilters(restFilters);
+  const { voivodeship, page, ...restFilters } = search;
+  const filterString = useDebouncedValue(
+    stringifyFilters(restFilters),
+    debounceDelayMs,
+  );
   return useQuery({
     queryKey: queryKeys.workshopsSummary(filterString),
     queryFn: () => fetchWorkshopsSummary({ filter: filterString }),
@@ -18,7 +24,10 @@ export const useWorkshops = (search: WorkshopsSearch) => {
 };
 
 export const useWorkshopsList = (search: WorkshopsSearch) => {
-  const filterString = stringifyFilters(search);
+  const filterString = useDebouncedValue(
+    stringifyFilters(search),
+    debounceDelayMs,
+  );
   return useQuery({
     queryKey: queryKeys.workshopsFull(filterString, search.page),
     queryFn: () =>
