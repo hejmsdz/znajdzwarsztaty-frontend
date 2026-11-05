@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FollowRouteImport } from './routes/follow'
 import { Route as ListRouteImport } from './routes/list'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FollowRoute = FollowRouteImport.update({
+  id: '/follow',
+  path: '/follow',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListRoute = ListRouteImport.update({
@@ -25,27 +31,31 @@ const ListRoute = ListRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/follow': typeof FollowRoute
   '/list': typeof ListRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/follow': typeof FollowRoute
   '/list': typeof ListRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/follow': typeof FollowRoute
   '/list': typeof ListRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/list'
+  fullPaths: '/' | '/follow' | '/list'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/list'
-  id: '__root__' | '/' | '/list'
+  to: '/' | '/follow' | '/list'
+  id: '__root__' | '/' | '/follow' | '/list'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FollowRoute: typeof FollowRoute
   ListRoute: typeof ListRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/follow': {
+      id: '/follow'
+      path: '/follow'
+      fullPath: '/follow'
+      preLoaderRoute: typeof FollowRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/list': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FollowRoute: FollowRoute,
   ListRoute: ListRoute,
 }
 export const routeTree = rootRouteImport
