@@ -64,7 +64,10 @@ export const workshopsSearchSchema = z.object({
 export type WorkshopsSearch = z.infer<typeof workshopsSearchSchema>;
 export type WorkshopsFilters = Omit<WorkshopsSearch, 'page'>;
 
-export const emptySearch: WorkshopsSearch = {
+export const emptySearch: {
+  [K in keyof WorkshopsSearch & string]: WorkshopsSearch[K] | undefined;
+} = {
+  text: undefined,
   type: undefined,
   level: undefined,
   duration: undefined,
