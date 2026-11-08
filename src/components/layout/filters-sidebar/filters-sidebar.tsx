@@ -2,8 +2,11 @@ import { Button } from '@/components/ui/button';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
+  useSidebar,
 } from '@/components/ui/sidebar';
+import { XIcon } from 'lucide-react';
 import { CheckboxFilter } from './checkbox-filter';
 import { InstructorsFilter } from './instructors-filter';
 import { SelectFilter } from './select-filter';
@@ -14,7 +17,6 @@ import {
   COST_STEP,
   COST_TICKS,
   DURATIONS,
-  emptySearch,
   LEVELS,
   WORKSHOP_TYPES,
 } from '@/filters/types';
@@ -23,6 +25,7 @@ import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
 import { useVoivodeships } from '#/hooks/queries/use-voivodeships';
 import { Input } from '#/components/ui/input';
 import { Filter } from './filter';
+import { ShowWorkshopsButton } from './show-workshops-button';
 
 function formatCostLabel({
   costMin = COST_MIN,
@@ -56,6 +59,8 @@ type FiltersSidebarProps = {
 };
 
 export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
+  const { setOpenMobile } = useSidebar();
+  const close = () => setOpenMobile(false);
   const [{ page, ...search }, onChange] = useWorkshopsSearchParams();
 
   const voivodeships = useVoivodeships(showVoivodeshipFilter ?? false);
@@ -70,15 +75,16 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
           <h2 className="font-heading text-base font-semibold tracking-tight">
             Filtry
           </h2>
-          {Object.keys(search).length > 0 && (
-            <Button
-              variant="link"
-              size="xs"
-              onClick={() => onChange(emptySearch)}
-            >
-              Wyczyść wszystkie
-            </Button>
-          )}
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            className="md:hidden"
+            onClick={close}
+            title="Zamknij"
+          >
+            <XIcon />
+            <span className="sr-only">Zamknij filtry</span>
+          </Button>
         </div>
       </SidebarHeader>
       <SidebarContent className="px-1 pt-0">
@@ -128,6 +134,9 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
           onValueChange={(level) => onChange({ level })}
         />
       </SidebarContent>
+      <SidebarFooter className="md:hidden">
+        <ShowWorkshopsButton onClick={close} />
+      </SidebarFooter>
     </Sidebar>
   );
 }

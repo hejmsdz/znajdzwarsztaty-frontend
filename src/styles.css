@@ -133,7 +133,8 @@
   }
 }
 
-.leaflet-pane {
+.leaflet-pane,
+.leaflet-bottom {
   z-index: 1;
 }
 

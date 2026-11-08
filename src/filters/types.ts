@@ -62,6 +62,7 @@ export const workshopsSearchSchema = z.object({
 });
 
 export type WorkshopsSearch = z.infer<typeof workshopsSearchSchema>;
+export type WorkshopsFilters = Omit<WorkshopsSearch, 'page'>;
 
 export const emptySearch: WorkshopsSearch = {
   type: undefined,
