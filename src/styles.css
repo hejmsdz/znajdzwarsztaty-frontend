@@ -138,6 +138,10 @@
   z-index: 1;
 }
 
+.marker-cluster-small div {
+  @apply flex size-7 items-center justify-center rounded-full bg-sidebar-primary-foreground text-primary shadow-lg ring-4 ring-primary/20 text-sm font-semibold;
+}
+
 .workshop-popup {
   .leaflet-popup-content-wrapper {
     @apply rounded-2xl bg-card shadow-xl;
