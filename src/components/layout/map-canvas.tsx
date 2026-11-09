@@ -80,7 +80,11 @@ export function MapCanvas() {
           {(workshops?.items ?? []).map(
             ({ id, title, location: { lat, lon } }) => (
               <Marker key={id} position={[lat, lon]} icon={pinIcon}>
-                <Tooltip direction="top" offset={[0, -18]}>
+                <Tooltip
+                  direction="top"
+                  offset={[0, -18]}
+                  className="workshop-tooltip"
+                >
                   {title}
                 </Tooltip>
                 <MapPopup workshopId={id} />
