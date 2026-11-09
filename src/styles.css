@@ -179,3 +179,27 @@
     color: inherit;
   }
 }
+
+.leaflet-container:has(.leaflet-popup) .leaflet-tooltip {
+  display: none;
+}
+
+.workshop-tooltip {
+  @apply rounded-2xl border-0 bg-background px-4 py-3 whitespace-normal font-sans text-sm text-foreground shadow-md md:whitespace-nowrap;
+
+  &.leaflet-tooltip-top::before {
+    border-top-color: var(--background);
+  }
+
+  &.leaflet-tooltip-bottom::before {
+    border-bottom-color: var(--background);
+  }
+
+  &.leaflet-tooltip-left::before {
+    border-left-color: var(--background);
+  }
+
+  &.leaflet-tooltip-right::before {
+    border-right-color: var(--background);
+  }
+}

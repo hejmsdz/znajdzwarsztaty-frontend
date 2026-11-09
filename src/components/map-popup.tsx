@@ -23,6 +23,7 @@ export function MapPopup({ workshopId }: { workshopId: string }) {
       minWidth={320}
       maxWidth={360}
       eventHandlers={{ add: () => setHasOpened(true) }}
+      autoPan
     >
       {hasOpened ? (
         <MapPopupContent workshopId={workshopId} />
