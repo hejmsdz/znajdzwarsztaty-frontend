@@ -3,6 +3,12 @@ import { Popup } from 'react-leaflet';
 import { WorkshopDetails, WorkshopDetailsSkeleton } from './workshop-details';
 import { useWorkshop } from '#/hooks/queries/use-workshop';
 
+function setUrlHash(workshopId: string | null) {
+  const { pathname, search } = window.location;
+  const hash = workshopId ? `#w-${workshopId}` : '';
+  history.replaceState(null, '', `${pathname}${search}${hash}`);
+}
+
 function MapPopupContent({ workshopId }: { workshopId: string }) {
   const { data: workshop } = useWorkshop(workshopId);
 
@@ -22,8 +28,15 @@ export function MapPopup({ workshopId }: { workshopId: string }) {
       offset={[0, -22]}
       minWidth={320}
       maxWidth={360}
-      eventHandlers={{ add: () => setHasOpened(true) }}
+      eventHandlers={{
+        add: () => {
+          setHasOpened(true);
+          setUrlHash(workshopId);
+        },
+        remove: () => setUrlHash(null),
+      }}
       autoPan
+      autoPanPadding={[32, 32]}
     >
       {hasOpened ? (
         <MapPopupContent workshopId={workshopId} />
