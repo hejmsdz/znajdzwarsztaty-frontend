@@ -29,7 +29,7 @@ export function FilterValue({ filterKey, value }: FilterValueProps) {
     case 'costMin':
       return `≥ ${value} zł`;
     case 'costMax':
-      return `≤ ${value} zł`;
+      return value === 0 ? 'Bezpłatne' : `≤ ${value} zł`;
     case 'type':
       return (
         WORKSHOP_TYPES.find((entry) => entry.value === value)?.label ?? value
