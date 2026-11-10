@@ -1,4 +1,4 @@
-import { ListIcon, MapPinIcon, MusicIcon } from 'lucide-react';
+import { BellIcon, ListIcon, MapPinIcon, MusicIcon } from 'lucide-react';
 import { MenuItem } from './menu-item';
 
 export function TopBar() {
@@ -19,6 +19,7 @@ export function TopBar() {
         <ul className="flex gap-4">
           <MenuItem to="/" icon={MapPinIcon} label="Mapa" />
           <MenuItem to="/list" icon={ListIcon} label="Lista" />
+          <MenuItem to="/follow" icon={BellIcon} label="Bądź na bieżąco" />
         </ul>
       </nav>
     </header>

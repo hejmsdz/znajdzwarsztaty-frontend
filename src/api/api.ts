@@ -10,6 +10,23 @@ export interface PaginatedList<T> {
   items: T[];
 }
 
+export class ApiError extends Error {
+  readonly status: number;
+  readonly body?: unknown;
+
+  static async fromResponse(response: Response): Promise<ApiError> {
+    const body = await response.json().catch(() => undefined);
+    return new ApiError(response.status, response.statusText, body);
+  }
+
+  constructor(status: number, statusText: string, body?: unknown) {
+    super(`API request failed (${status} ${statusText})`);
+    this.name = 'ApiError';
+    this.status = status;
+    this.body = body;
+  }
+}
+
 export async function apiFetch<T>(
   path: string,
   init?: RequestInit,
@@ -17,9 +34,7 @@ export async function apiFetch<T>(
   const response = await fetch(`${API_URL}${path}`, init);
 
   if (!response.ok) {
-    throw new Error(
-      `API request failed (${response.status} ${response.statusText})`,
-    );
+    throw await ApiError.fromResponse(response);
   }
 
   return response.json() as Promise<T>;
