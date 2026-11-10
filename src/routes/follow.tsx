@@ -1,6 +1,6 @@
 import { CitiesCombobox } from '#/components/follow/cities-combobox';
-import { ErrorMessage } from '#/components/follow/error-message';
-import { SuccessMessage } from '#/components/follow/success-message';
+import { SubscriptionErrorAlert } from '#/components/follow/subscription-error-alert';
+import { SuccessMessage } from '#/components/messages/success-message';
 import { TopBar } from '#/components/layout/top-bar/top-bar';
 import { Button } from '#/components/ui/button';
 import {
@@ -191,7 +191,9 @@ function RouteComponent() {
                   />
                   <FieldError>{errors.antispamToken}</FieldError>
 
-                  {isError ? <ErrorMessage error={mutationError} /> : null}
+                  {isError ? (
+                    <SubscriptionErrorAlert error={mutationError} />
+                  ) : null}
 
                   <Button
                     type="submit"

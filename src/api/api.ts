@@ -37,5 +37,10 @@ export async function apiFetch<T>(
     throw await ApiError.fromResponse(response);
   }
 
+  // 204 No Content has no body to parse (e.g. record deletion).
+  if (response.status === 204) {
+    return undefined as T;
+  }
+
   return response.json() as Promise<T>;
 }

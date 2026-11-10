@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as FollowRouteImport } from './routes/follow'
 import { Route as ListRouteImport } from './routes/list'
+import { Route as FollowConfirmIdRouteImport } from './routes/follow_.confirm.$id'
+import { Route as FollowUnsubscribeIdRouteImport } from './routes/follow_.unsubscribe.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +30,69 @@ const ListRoute = ListRouteImport.update({
   path: '/list',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FollowConfirmIdRoute = FollowConfirmIdRouteImport.update({
+  id: '/follow_/confirm/$id',
+  path: '/follow/confirm/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FollowUnsubscribeIdRoute = FollowUnsubscribeIdRouteImport.update({
+  id: '/follow_/unsubscribe/$id',
+  path: '/follow/unsubscribe/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/follow': typeof FollowRoute
   '/list': typeof ListRoute
+  '/follow/confirm/$id': typeof FollowConfirmIdRoute
+  '/follow/unsubscribe/$id': typeof FollowUnsubscribeIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/follow': typeof FollowRoute
   '/list': typeof ListRoute
+  '/follow/confirm/$id': typeof FollowConfirmIdRoute
+  '/follow/unsubscribe/$id': typeof FollowUnsubscribeIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/follow': typeof FollowRoute
   '/list': typeof ListRoute
+  '/follow_/confirm/$id': typeof FollowConfirmIdRoute
+  '/follow_/unsubscribe/$id': typeof FollowUnsubscribeIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/follow' | '/list'
+  fullPaths:
+    | '/'
+    | '/follow'
+    | '/list'
+    | '/follow/confirm/$id'
+    | '/follow/unsubscribe/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/follow' | '/list'
-  id: '__root__' | '/' | '/follow' | '/list'
+  to:
+    | '/'
+    | '/follow'
+    | '/list'
+    | '/follow/confirm/$id'
+    | '/follow/unsubscribe/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/follow'
+    | '/list'
+    | '/follow_/confirm/$id'
+    | '/follow_/unsubscribe/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   FollowRoute: typeof FollowRoute
   ListRoute: typeof ListRoute
+  FollowConfirmIdRoute: typeof FollowConfirmIdRoute
+  FollowUnsubscribeIdRoute: typeof FollowUnsubscribeIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +118,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/follow_/confirm/$id': {
+      id: '/follow_/confirm/$id'
+      path: '/follow/confirm/$id'
+      fullPath: '/follow/confirm/$id'
+      preLoaderRoute: typeof FollowConfirmIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/follow_/unsubscribe/$id': {
+      id: '/follow_/unsubscribe/$id'
+      path: '/follow/unsubscribe/$id'
+      fullPath: '/follow/unsubscribe/$id'
+      preLoaderRoute: typeof FollowUnsubscribeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +139,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   FollowRoute: FollowRoute,
   ListRoute: ListRoute,
+  FollowConfirmIdRoute: FollowConfirmIdRoute,
+  FollowUnsubscribeIdRoute: FollowUnsubscribeIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

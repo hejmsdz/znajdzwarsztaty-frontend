@@ -31,11 +31,11 @@ function getErrorDescription(error: Error): string {
   }
 }
 
-type ErrorMessageProps = {
+type SubscriptionErrorAlertProps = {
   error: Error;
 };
 
-export function ErrorMessage({ error }: ErrorMessageProps) {
+export function SubscriptionErrorAlert({ error }: SubscriptionErrorAlertProps) {
   const description = getErrorDescription(error);
 
   return (

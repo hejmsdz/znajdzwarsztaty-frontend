@@ -28,3 +28,29 @@ export async function createNotificationSubscription(
     }),
   });
 }
+
+export async function confirmNotificationSubscription(
+  id: string,
+  token: string,
+): Promise<void> {
+  await apiFetch(`${COLLECTION_PATH}/${id}/confirm`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token }),
+  });
+}
+
+export async function unsubscribeNotificationSubscription(
+  id: string,
+  token: string,
+): Promise<void> {
+  await apiFetch(`${COLLECTION_PATH}/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ token }),
+  });
+}
