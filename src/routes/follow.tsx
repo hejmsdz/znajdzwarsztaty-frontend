@@ -1,5 +1,6 @@
 import { CitiesCombobox } from '#/components/follow/cities-combobox';
 import { ErrorMessage } from '#/components/follow/error-message';
+import { SuccessMessage } from '#/components/follow/success-message';
 import { TopBar } from '#/components/layout/top-bar/top-bar';
 import { Button } from '#/components/ui/button';
 import {
@@ -16,7 +17,7 @@ import { useCreateNotificationSubscription } from '#/hooks/queries/use-create-no
 import { Turnstile } from '@marsidev/react-turnstile';
 import type { TurnstileInstance } from '@marsidev/react-turnstile';
 import { createFileRoute } from '@tanstack/react-router';
-import { BellRingIcon, CircleCheckIcon, LoaderCircleIcon } from 'lucide-react';
+import { BellRingIcon, LoaderCircleIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type { SubmitEvent } from 'react';
 
@@ -45,7 +46,6 @@ function RouteComponent() {
     isSuccess,
     isError,
     error: mutationError,
-    reset,
   } = useCreateNotificationSubscription();
 
   const clearError = (key: FollowFormError) => {
@@ -89,36 +89,17 @@ function RouteComponent() {
     );
   };
 
-  const handleReset = () => {
-    setEmail('');
-    setCity(null);
-    setMaxDistanceKm(DEFAULT_DISTANCE_KM);
-    setErrors({});
-    reset();
-  };
-
   return (
     <div className="flex min-h-svh flex-col">
       <TopBar />
       <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10 md:py-16">
         {isSuccess ? (
-          <section className="rounded-4xl border bg-card p-8 text-center shadow-sm">
-            <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-              <CircleCheckIcon className="size-6" />
-            </div>
-            <h1 className="mt-4 font-heading text-2xl font-semibold tracking-tight">
-              Prawie gotowe!
-            </h1>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Wysłaliśmy wiadomość z&nbsp;linkiem potwierdzającym na&nbsp;adres{' '}
-              <span className="font-medium text-foreground">{email}</span>.
-              Kliknij link w&nbsp;wiadomości, aby aktywować powiadomienia
-              o&nbsp;nowych warsztatach w&nbsp;Twojej okolicy.
-            </p>
-            <Button variant="outline" className="mt-6" onClick={handleReset}>
-              Dodaj kolejne powiadomienie
-            </Button>
-          </section>
+          <SuccessMessage title="Prawie gotowe!">
+            Wysłaliśmy wiadomość z&nbsp;linkiem potwierdzającym na&nbsp;adres{' '}
+            <span className="font-medium text-foreground">{email}</span>.
+            Kliknij link w&nbsp;wiadomości, aby aktywować powiadomienia
+            o&nbsp;nowych warsztatach w&nbsp;Twojej okolicy.
+          </SuccessMessage>
         ) : (
           <>
             <section className="rounded-4xl border bg-card p-6 shadow-sm sm:p-8">
