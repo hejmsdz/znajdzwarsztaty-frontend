@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
-import { LocateFixedIcon, MinusIcon, PlusIcon } from 'lucide-react';
+import { MinusIcon, PlusIcon } from 'lucide-react';
 
 import {
   MapContainer,
@@ -45,14 +45,6 @@ function MapControls() {
         onClick={() => map.zoomOut()}
       >
         <MinusIcon />
-      </Button>
-      <Button
-        variant="ghost"
-        size="icon-sm"
-        aria-label="Pokaż moją lokalizację"
-        onClick={() => map.locate({ setView: true, maxZoom: 13 })}
-      >
-        <LocateFixedIcon />
       </Button>
     </div>
   );
