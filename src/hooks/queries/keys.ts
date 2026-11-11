@@ -5,6 +5,7 @@ export const queryKeys = {
     ['workshops', 'full', filtersString, page ?? 1] as const,
   workshop: (id: string) => ['workshop', id] as const,
   voivodeships: () => ['voivodeships'] as const,
+  instructor: (id: string) => ['instructors', 'byId', id] as const,
   instructorsHead: (limit: number) => ['instructors', 'head', limit] as const,
   instructorsPages: (headNumItems: number, pageSize: number) =>
     ['instructors', 'pages', headNumItems, pageSize] as const,

@@ -12,6 +12,10 @@ export type Instructor = {
   specialization: string;
 };
 
+export async function fetchInstructor(id: string): Promise<Instructor> {
+  return apiFetch<Instructor>(`${COLLECTION_PATH}/${id}`);
+}
+
 export async function fetchInstructors({
   perPage = MAX_PER_PAGE,
   page = 1,

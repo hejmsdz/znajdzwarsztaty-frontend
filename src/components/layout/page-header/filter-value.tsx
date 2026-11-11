@@ -5,8 +5,7 @@ import {
   WORKSHOP_TYPES,
 } from '@/filters/types';
 import type { WorkshopsFilters } from '@/filters/types';
-import { MAX_PER_PAGE } from '#/api/api';
-import { useInstructorsHead } from '#/hooks/queries/use-instructors';
+import { useInstructor } from '@/hooks/queries/use-instructor';
 
 type FilterValueProps<
   T extends keyof WorkshopsFilters = keyof WorkshopsFilters,
@@ -16,12 +15,9 @@ type FilterValueProps<
 };
 
 function InstructorValue({ id }: { id: string }) {
-  const instructorsQuery = useInstructorsHead(MAX_PER_PAGE);
-  const name = instructorsQuery.data?.items.find(
-    (instructor) => instructor.id === id,
-  )?.name;
+  const { data } = useInstructor(id);
 
-  return name ?? id;
+  return data?.name ?? '...';
 }
 
 export function FilterValue({ filterKey, value }: FilterValueProps) {
