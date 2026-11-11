@@ -1,10 +1,12 @@
 import {
   BellIcon,
+  InfoIcon,
   LayoutListIcon,
   MapPinIcon,
   MenuIcon,
   MusicIcon,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import type { LinkComponentProps } from '@tanstack/react-router';
 import { DropdownMenuLink } from './dropdown-menu-link';
 import { MenuLink } from './menu-link';
@@ -19,6 +21,25 @@ import { pick } from '#/lib/pick';
 
 const workshopsSearch: NonNullable<LinkComponentProps['search']> = (params) =>
   pick(params, workshopsSearchKeys);
+
+type SecondaryLink = {
+  to: LinkComponentProps['to'];
+  icon: LucideIcon;
+  label: string;
+};
+
+const secondaryLinks: SecondaryLink[] = [
+  {
+    to: '/follow',
+    icon: BellIcon,
+    label: 'Bądź na bieżąco',
+  },
+  {
+    to: '/about',
+    icon: InfoIcon,
+    label: 'O stronie',
+  },
+];
 
 export function TopBar() {
   return (
@@ -48,12 +69,15 @@ export function TopBar() {
             label="Lista"
             search={workshopsSearch}
           />
-          <MenuLink
-            to="/follow"
-            icon={BellIcon}
-            label="Bądź na bieżąco"
-            className="hidden sm:flex"
-          />
+          {secondaryLinks.map((link) => (
+            <MenuLink
+              key={link.to}
+              to={link.to}
+              icon={link.icon}
+              label={link.label}
+              className="hidden sm:flex"
+            />
+          ))}
           <li className="flex items-center sm:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger
@@ -64,11 +88,14 @@ export function TopBar() {
                 }
               />
               <DropdownMenuContent align="end" className="sm:hidden">
-                <DropdownMenuLink
-                  to="/follow"
-                  icon={BellIcon}
-                  label="Bądź na bieżąco"
-                />
+                {secondaryLinks.map((link) => (
+                  <DropdownMenuLink
+                    key={link.to}
+                    to={link.to}
+                    icon={link.icon}
+                    label={link.label}
+                  />
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
           </li>
