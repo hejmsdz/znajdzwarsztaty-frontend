@@ -8,8 +8,8 @@ export function stringifyFilters(filter?: WorkshopsSearch): string | undefined {
 
   const groups: string[] = [];
 
-  if (filter.text && filter.text.trim().length > 0) {
-    groups.push(anyFieldLike(['title', 'venue', 'locality'], filter.text));
+  if (filter.q && filter.q.trim().length > 0) {
+    groups.push(anyFieldLike(['title', 'venue', 'locality'], filter.q));
   }
   if (filter.type && filter.type.length > 0) {
     groups.push(anyOfGroup('type', filter.type));

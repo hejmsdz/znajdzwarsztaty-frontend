@@ -90,8 +90,8 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
       <SidebarContent className="px-1 pt-0">
         <Filter label="Szukaj">
           <Input
-            value={search.text || ''}
-            onChange={(event) => onChange({ text: event.target.value })}
+            value={search.q || ''}
+            onChange={(event) => onChange({ q: event.target.value })}
             placeholder="Tytuł albo miejsce warsztatów"
           />
         </Filter>
