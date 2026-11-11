@@ -6,6 +6,7 @@ import { MapCanvas } from '@/components/layout/map-canvas';
 import { PageHeader } from '#/components/layout/page-header/page-header';
 import { TopBar } from '@/components/layout/top-bar/top-bar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { useWorkshops } from '#/hooks/queries/use-workshops';
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -13,6 +14,8 @@ export const Route = createFileRoute('/')({
 });
 
 function Home() {
+  const { data } = useWorkshops();
+
   return (
     <SidebarProvider
       className="flex h-svh flex-col overflow-hidden"
@@ -22,7 +25,7 @@ function Home() {
       <div className="flex min-h-0 flex-1 overflow-hidden">
         <FiltersSidebar />
         <SidebarInset className="min-w-0">
-          <PageHeader title="Mapa warsztatów" />
+          <PageHeader title="Mapa warsztatów" totalItems={data?.totalItems} />
           <div className="flex min-h-0 flex-1 flex-col">
             <MapCanvas />
           </div>

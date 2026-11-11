@@ -11,7 +11,6 @@ import {
 } from 'react-leaflet';
 import { MapPopup } from '#/components/map-popup';
 import { useWorkshops } from '#/hooks/queries/use-workshops';
-import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
 import { Button } from '@/components/ui/button';
 
 const MAP_CENTER: [number, number] = [52.06, 19.48];
@@ -60,8 +59,7 @@ function MapControls() {
 }
 
 export function MapCanvas() {
-  const [search] = useWorkshopsSearchParams();
-  const { data: workshops } = useWorkshops(search);
+  const { data: workshops } = useWorkshops();
 
   return (
     <div className="relative min-h-0 flex-1">

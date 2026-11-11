@@ -57,7 +57,7 @@ function pageSearch(search: WorkshopsSearch, page: number): WorkshopsSearch {
 export function WorkshopList() {
   const [search, onSearchChange] = useWorkshopsSearchParams();
   const { data, isPending, isError, isPlaceholderData, refetch } =
-    useWorkshopsList(search);
+    useWorkshopsList();
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const workshops = data?.items ?? [];

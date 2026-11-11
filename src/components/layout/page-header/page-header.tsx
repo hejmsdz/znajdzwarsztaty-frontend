@@ -1,5 +1,4 @@
 import { FilterIcon } from 'lucide-react';
-import { useWorkshops } from '#/hooks/queries/use-workshops';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
 import { Button } from '@/components/ui/button';
 import { useSidebar } from '../../ui/sidebar';
@@ -9,6 +8,7 @@ import { FilterBadges } from './filter-badges';
 
 type PageHeaderProps = {
   title: string;
+  totalItems?: number;
 };
 
 const PLURAL_RULES = new Intl.PluralRules('pl-PL');
@@ -26,24 +26,22 @@ function getEventNoun(count: number) {
   return EVENT_NOUNS[PLURAL_RULES.select(count)];
 }
 
-export function PageHeader({ title }: PageHeaderProps) {
+export function PageHeader({ title, totalItems }: PageHeaderProps) {
   const { toggleSidebar } = useSidebar();
   const [search, onChange] = useWorkshopsSearchParams();
-  const { data } = useWorkshops(search);
 
-  const { page, ...filters } = search;
-  const filtersCount = Object.keys(filters).length;
+  const filtersCount = Object.keys(search).length;
 
   return (
     <header className="border-b">
       <div className="flex items-center justify-between p-4">
         <div>
           <h1 className="text-xl font-semibold">{title}</h1>
-          {data && (
-            <p className="text-sm text-muted-foreground">
-              Znaleziono {data.totalItems} {getEventNoun(data.totalItems)}
-            </p>
-          )}
+          <p className="text-sm text-muted-foreground">
+            {totalItems === undefined
+              ? 'Ładowanie...'
+              : `Znaleziono ${totalItems} ${getEventNoun(totalItems)}`}
+          </p>
         </div>
         <Button className="md:hidden" variant="outline" onClick={toggleSidebar}>
           <FilterIcon />
@@ -59,7 +57,7 @@ export function PageHeader({ title }: PageHeaderProps) {
             variant="link"
             onClick={() => onChange(emptySearch)}
           >
-            Wyczyść
+            Wyczyść filtry
           </Button>
         </div>
       ) : null}

@@ -7,6 +7,7 @@ import type { WorkshopsSearch } from '#/filters/types';
 import { queryKeys } from '#/hooks/queries/keys';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { useDebouncedValue } from '../use-debounced-value';
+import { useWorkshopsSearchParams } from '../use-workshops-search-params';
 
 const debounceDelayMs = 400;
 
@@ -24,9 +25,9 @@ const useDebouncedFilters = (params: WorkshopsSearch) => {
   };
 };
 
-export const useWorkshops = (search: WorkshopsSearch) => {
-  const { voivodeship, page, ...restFilters } = search;
-  const { filterString, isDebouncing } = useDebouncedFilters(restFilters);
+export const useWorkshops = () => {
+  const [search] = useWorkshopsSearchParams();
+  const { filterString, isDebouncing } = useDebouncedFilters(search);
 
   const query = useQuery({
     queryKey: queryKeys.workshopsSummary(filterString),
@@ -40,7 +41,8 @@ export const useWorkshops = (search: WorkshopsSearch) => {
   };
 };
 
-export const useWorkshopsList = (search: WorkshopsSearch) => {
+export const useWorkshopsList = () => {
+  const [search] = useWorkshopsSearchParams();
   const { filterString, isDebouncing } = useDebouncedFilters(search);
 
   const query = useQuery({

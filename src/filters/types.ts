@@ -78,6 +78,10 @@ export const emptySearch: {
   page: undefined,
 };
 
+export const workshopsSearchKeys = Object.keys(
+  emptySearch,
+) as (keyof WorkshopsSearch)[];
+
 export function clearSearchParams(
   searchToClear: WorkshopsSearch,
 ): WorkshopsSearch {

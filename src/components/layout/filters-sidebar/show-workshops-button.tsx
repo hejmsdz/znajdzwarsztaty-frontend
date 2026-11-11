@@ -1,6 +1,5 @@
 import { Button } from '#/components/ui/button';
 import { useWorkshops } from '#/hooks/queries/use-workshops';
-import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
 import type { ComponentProps } from 'react';
 
 const PLURAL_RULES = new Intl.PluralRules('pl-PL');
@@ -21,8 +20,7 @@ function getWorkshopsNoun(count: number) {
 export function ShowWorkshopsButton(
   props: Omit<ComponentProps<typeof Button>, 'children'>,
 ) {
-  const [search] = useWorkshopsSearchParams();
-  const { data } = useWorkshops(search);
+  const { data } = useWorkshops();
 
   return (
     <Button {...props}>

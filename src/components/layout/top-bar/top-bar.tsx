@@ -1,5 +1,11 @@
 import { BellIcon, ListIcon, MapPinIcon, MusicIcon } from 'lucide-react';
+import type { LinkComponentProps } from '@tanstack/react-router';
 import { MenuItem } from './menu-item';
+import { workshopsSearchKeys } from '#/filters/types';
+import { pick } from '#/lib/pick';
+
+const workshopsSearch: NonNullable<LinkComponentProps['search']> = (params) =>
+  pick(params, workshopsSearchKeys);
 
 export function TopBar() {
   return (
@@ -17,8 +23,18 @@ export function TopBar() {
 
       <nav className="h-full flex text-sm">
         <ul className="flex gap-4">
-          <MenuItem to="/" icon={MapPinIcon} label="Mapa" />
-          <MenuItem to="/list" icon={ListIcon} label="Lista" />
+          <MenuItem
+            to="/"
+            icon={MapPinIcon}
+            label="Mapa"
+            search={workshopsSearch}
+          />
+          <MenuItem
+            to="/list"
+            icon={ListIcon}
+            label="Lista"
+            search={workshopsSearch}
+          />
           <MenuItem to="/follow" icon={BellIcon} label="Bądź na bieżąco" />
         </ul>
       </nav>

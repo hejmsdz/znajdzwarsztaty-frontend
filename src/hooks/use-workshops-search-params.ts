@@ -1,27 +1,46 @@
-import { useNavigate, useRouterState, useSearch } from '@tanstack/react-router';
-import { clearSearchParams } from '#/filters/types';
+import { useMemo } from 'react';
+import { useNavigate, useSearch } from '@tanstack/react-router';
+import {
+  clearSearchParams,
+  emptySearch,
+  workshopsSearchKeys,
+} from '#/filters/types';
 import type { WorkshopsSearch } from '#/filters/types';
+import { pick } from '#/lib/pick';
+import { useWorkshopsView } from './use-workshops-vlew';
 
 type Patch = Partial<WorkshopsSearch>;
 type Updater = (patch: Patch) => void;
 
-const WORKSHOPS_ROUTES = ['/', '/list'] as const;
-type WorkshopsRoute = (typeof WORKSHOPS_ROUTES)[number];
-
-function getWorkshopsRoute(pathname: string): WorkshopsRoute {
-  return WORKSHOPS_ROUTES.find((route) => route === pathname) ?? '/';
-}
+const noop = () => {};
+const mapViewKeys = workshopsSearchKeys.filter(
+  (key) => key !== 'voivodeship' && key !== 'page',
+);
 
 export function useWorkshopsSearchParams(): [WorkshopsSearch, Updater] {
-  const pathname = useRouterState({
-    select: (state) => state.location.pathname,
+  const { path, view } = useWorkshopsView();
+  const rawSearch = useSearch({
+    strict: false,
   });
-  const search = useSearch({ strict: false });
+  const search = useMemo(() => {
+    if (view == 'map') {
+      return pick(rawSearch, mapViewKeys);
+    }
+
+    if (view === 'list') {
+      return pick(rawSearch, workshopsSearchKeys);
+    }
+    return emptySearch;
+  }, [rawSearch, view]);
   const navigate = useNavigate();
+
+  if (!view) {
+    return [{}, noop];
+  }
 
   const updateSearch = (patch: Patch) => {
     void navigate({
-      to: getWorkshopsRoute(pathname),
+      to: path,
       search: (prev) =>
         clearSearchParams({
           ...prev,
