@@ -146,10 +146,13 @@ function PrivacyPage() {
               </li>
               <li>
                 Wpisy o&nbsp;warsztatach przygotowuję z&nbsp;pomocą sztucznej
-                inteligencji (otwarty model GLM, uruchamiany na&nbsp;serwerach
-                w&nbsp;Europie). Trafiają do&nbsp;niej{' '}
+                inteligencji (otwarty model GLM przez pośrednika OpenRouter).
+                Trafiają do&nbsp;niej{' '}
                 <strong>wyłącznie publiczne ogłoszenia</strong>, nigdy dane
-                subskrybentów ani&nbsp;odwiedzających.{' '}
+                subskrybentów ani&nbsp;odwiedzających, a&nbsp;wymuszone
+                ustawienie „Zero Data Retention” sprawia, że&nbsp;treści te
+                nie&nbsp;są zapisywane ani&nbsp;używane do&nbsp;trenowania
+                modeli.{' '}
                 <AnchorLink id="4-ai">Szczegóły w&nbsp;punkcie 4</AnchorLink>.
               </li>
             </Ul>
@@ -426,12 +429,10 @@ function PrivacyPage() {
             na&nbsp;to zgodę. Wstępnie odczytuje je model językowy{' '}
             <strong>GLM 5.3 Flash</strong> opracowany przez chińską firmę Z.ai.
             Model ma otwarte wagi, więc nie korzystam z&nbsp;usług Z.ai:
-            zapytania wysyłam przez serwis <strong>OpenRouter</strong>{' '}
-            w&nbsp;trybie routingu regionalnego UE. Model uruchamia wybrany
-            przez OpenRouter europejski dostawca chmurowy, który dzięki
-            wymuszonym przeze mnie ustawieniom (Zero Data Retention)
-            nie&nbsp;zapisuje treści zapytań i&nbsp;nie trenuje na&nbsp;nich
-            modeli.
+            zapytania wysyłam przez serwis <strong>OpenRouter</strong>,
+            w&nbsp;którym wymuszam ustawienie „Zero Data Retention”. Dzięki temu
+            dostawca chmurowy uruchamiający model nie&nbsp;zapisuje treści
+            zapytań i&nbsp;nie trenuje na&nbsp;nich modeli.
           </P>
 
           <H3 id="4-1-co-robi-ai">
@@ -466,24 +467,28 @@ function PrivacyPage() {
             </li>
           </Ul>
 
-          <H3 id="4-2-region">4.2. Gdzie przetwarzane są ogłoszenia</H3>
+          <H3 id="4-2-zdr">4.2. Brak zapisu treści (Zero Data Retention)</H3>
           <P>
-            Zapytania do&nbsp;modelu kieruję na&nbsp;regionalny adres OpenRouter
-            dla Europy (<Code>eu.openrouter.ai</Code>). Treść zapytań
-            i&nbsp;odpowiedzi jest wtedy przetwarzana wyłącznie
-            na&nbsp;serwerach w&nbsp;Europie, a&nbsp;gdy żaden europejski
-            dostawca nie może obsłużyć zapytania, zostaje ono odrzucone, zamiast
-            trafić do&nbsp;serwera poza Europą. Model GLM 5.3 Flash uruchamia
-            na&nbsp;takich serwerach dostawca chmurowy wybrany przez OpenRouter.
-            Wymuszam przy tym ustawienie „Zero Data Retention”, więc treści
-            zapytań nie są zapisywane ani przez tego dostawcę, ani przez
-            OpenRouter. Firma Z.ai, autor modelu, nie otrzymuje tych danych.
+            W&nbsp;OpenRouter wymuszam ustawienie „Zero Data Retention”.
+            Treść zapytań i&nbsp;odpowiedzi nie&nbsp;jest zapisywana ani przez
+            OpenRouter, ani przez dostawcę chmurowego, który uruchamia model
+            GLM 5.3 Flash, ani&nbsp;przez firmę Z.ai, autora modelu. Treści
+            te&nbsp;są przetwarzane doraźnie, wyłącznie w&nbsp;celu
+            przygotowania wpisu, i&nbsp;nie&nbsp;są używane do&nbsp;trenowania
+            modeli.
           </P>
           <P>
-            OpenRouter jest firmą z&nbsp;USA. Dane mojego konta i&nbsp;dane
-            operacyjne (np. rozliczenia, dzienniki bezpieczeństwa) mogą być tam
-            przechowywane, ale nie obejmują one treści ogłoszeń przekazywanych
-            modelowi. Zasady OpenRouter i&nbsp;poszczególnych dostawców:{' '}
+            Nie korzystam z&nbsp;regionalnego routingu OpenRouter, więc
+            nie&nbsp;mam wpływu na&nbsp;to, w&nbsp;którym kraju serwer
+            przetworzy zapytanie — może to być także serwer poza Europejskim
+            Obszarem Gospodarczym (np. w&nbsp;Stanach Zjednoczonych). Takie
+            chwilowe przetwarzanie bez zapisu zabezpieczają mechanizmy
+            przewidziane w&nbsp;RODO, opisane w&nbsp;{' '}
+            <AnchorLink id="6-transfer">punkcie 6</AnchorLink>. OpenRouter jest
+            firmą z&nbsp;USA: dane mojego konta i&nbsp;dane operacyjne (np.
+            rozliczenia, dzienniki bezpieczeństwa) mogą być tam przechowywane,
+            ale nie obejmują one treści ogłoszeń przekazywanych modelowi.
+            Zasady OpenRouter i&nbsp;poszczególnych dostawców:{' '}
             <ExternalLink href="https://openrouter.ai/privacy">
               openrouter.ai/privacy
             </ExternalLink>
@@ -608,9 +613,9 @@ function PrivacyPage() {
           </P>
           <Ul>
             <li>
-              <strong>OpenRouter</strong> (pośrednik) oraz europejscy dostawcy
-              chmurowi uruchamiający model – odczyt ogłoszeń przez model
-              językowy (<AnchorLink id="4-ai">punkt 4</AnchorLink>).
+              <strong>OpenRouter</strong> (pośrednik) oraz dostawcy chmurowi
+              uruchamiający model – odczyt ogłoszeń przez model językowy
+              (<AnchorLink id="4-ai">punkt 4</AnchorLink>).
             </li>
             <li>
               <strong>Google Maps Platform (Places API)</strong> – ustalanie
@@ -649,18 +654,20 @@ function PrivacyPage() {
           </P>
           <P>
             Niektórzy dostawcy (Resend, Cloudflare, Google, Apify oraz
-            OpenRouter w&nbsp;zakresie danych konta) mogą przetwarzać dane poza
-            Europejskim Obszarem Gospodarczym, w&nbsp;szczególności
-            w&nbsp;Stanach Zjednoczonych. Przekazanie opiera się wtedy
-            na&nbsp;mechanizmach przewidzianych w&nbsp;RODO, takich jak decyzja
-            Komisji Europejskiej o&nbsp;odpowiednim stopniu ochrony (np. EU–US
-            Data Privacy Framework dla certyfikowanych firm z&nbsp;USA) albo
-            standardowe klauzule umowne.
+            OpenRouter, także w&nbsp;zakresie treści ogłoszeń przekazywanych
+            modelowi) mogą przetwarzać dane poza Europejskim Obszarem
+            Gospodarczym, w&nbsp;szczególności w&nbsp;Stanach Zjednoczonych.
+            Przekazanie opiera się wtedy na&nbsp;mechanizmach przewidzianych
+            w&nbsp;RODO, takich jak decyzja Komisji Europejskiej
+            o&nbsp;odpowiednim stopniu ochrony (np. EU–US Data Privacy
+            Framework dla certyfikowanych firm z&nbsp;USA) albo standardowe
+            klauzule umowne.
           </P>
           <P>
-            Treści ogłoszeń przekazywane modelowi językowemu są przetwarzane
-            w&nbsp;Europie (<AnchorLink id="4-2-region">punkt 4.2</AnchorLink>
-            ).
+            Treści ogłoszeń przekazywane modelowi językowemu nie&nbsp;są
+            zapisywane (Zero Data Retention,{' '}
+            <AnchorLink id="4-2-zdr">punkt 4.2</AnchorLink>), ale ich doraźne
+            przetwarzanie może odbywać się także poza EOG.
           </P>
 
           <H2 id="7-retencja">7. Jak długo przechowuję dane</H2>
