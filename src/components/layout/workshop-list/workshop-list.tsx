@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useRouterState } from '@tanstack/react-router';
 import { parseWorkshopDate } from '@/components/workshop-details';
 import type { Workshop } from '#/api/workshops/workshops';
 import { useWorkshopsList } from '#/hooks/queries/use-workshops';

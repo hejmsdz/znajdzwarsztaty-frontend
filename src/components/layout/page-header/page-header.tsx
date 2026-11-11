@@ -1,4 +1,4 @@
-import { FilterIcon, XIcon } from 'lucide-react';
+import { FilterIcon } from 'lucide-react';
 import { useWorkshops } from '#/hooks/queries/use-workshops';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
 import { Button } from '@/components/ui/button';
