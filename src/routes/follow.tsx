@@ -16,7 +16,7 @@ import type { City } from '#/hooks/queries/use-cities-by-letter';
 import { useCreateNotificationSubscription } from '#/hooks/queries/use-create-notification-subscription';
 import { Turnstile } from '@marsidev/react-turnstile';
 import type { TurnstileInstance } from '@marsidev/react-turnstile';
-import { createFileRoute } from '@tanstack/react-router';
+import { Link, createFileRoute } from '@tanstack/react-router';
 import { BellRingIcon, LoaderCircleIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type { SubmitEvent } from 'react';
@@ -223,6 +223,15 @@ function RouteComponent() {
             <p className="mt-4 text-center text-xs text-muted-foreground">
               Zapisując się, zgadzasz się na otrzymywanie powiadomień e-mail
               o&nbsp;nowych warsztatach. Możesz zrezygnować w każdej chwili.
+              <br />
+              Szczegóły znajdziesz w&nbsp;
+              <Link
+                to="/privacy"
+                className="text-primary underline underline-offset-2 hover:text-primary/80"
+              >
+                polityce prywatności
+              </Link>
+              .
             </p>
           </>
         )}
