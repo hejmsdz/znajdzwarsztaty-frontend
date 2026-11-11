@@ -210,10 +210,17 @@ export function WorkshopDetails({
     </div>
   );
 
+  const allFemaleInstructors = instructors.every((instructor) =>
+    instructor.name
+      .split(' ')
+      .find((word) => word[0] === word[0].toLocaleUpperCase())
+      ?.endsWith('a'),
+  );
   const instructorsBlock = (
     <section className="flex flex-col gap-2">
       <h4 className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-        Prowadzący
+        Prowadząc
+        {allFemaleInstructors ? (instructors.length == 1 ? 'a' : 'e') : 'y'}
       </h4>
       <ul className="flex flex-col gap-2">
         {instructors.map((instructor) => (
