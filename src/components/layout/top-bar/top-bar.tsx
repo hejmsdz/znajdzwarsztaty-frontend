@@ -34,11 +34,11 @@ const secondaryLinks: SecondaryLink[] = [
     icon: BellIcon,
     label: 'Bądź na bieżąco',
   },
-  {
-    to: '/about',
-    icon: InfoIcon,
-    label: 'O stronie',
-  },
+  // {
+  //   to: '/about',
+  //   icon: InfoIcon,
+  //   label: 'O stronie',
+  // },
 ];
 
 export function TopBar() {
