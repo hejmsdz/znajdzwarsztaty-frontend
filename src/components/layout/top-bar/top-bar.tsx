@@ -1,6 +1,19 @@
-import { BellIcon, ListIcon, MapPinIcon, MusicIcon } from 'lucide-react';
+import {
+  BellIcon,
+  LayoutListIcon,
+  MapPinIcon,
+  MenuIcon,
+  MusicIcon,
+} from 'lucide-react';
 import type { LinkComponentProps } from '@tanstack/react-router';
-import { MenuItem } from './menu-item';
+import { DropdownMenuLink } from './dropdown-menu-link';
+import { MenuLink } from './menu-link';
+import { Button } from '#/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '#/components/ui/dropdown-menu';
 import { workshopsSearchKeys } from '#/filters/types';
 import { pick } from '#/lib/pick';
 
@@ -22,20 +35,43 @@ export function TopBar() {
       </div>
 
       <nav className="h-full flex text-sm">
-        <ul className="flex gap-4">
-          <MenuItem
+        <ul className="flex gap-2">
+          <MenuLink
             to="/"
             icon={MapPinIcon}
             label="Mapa"
             search={workshopsSearch}
           />
-          <MenuItem
+          <MenuLink
             to="/list"
-            icon={ListIcon}
+            icon={LayoutListIcon}
             label="Lista"
             search={workshopsSearch}
           />
-          <MenuItem to="/follow" icon={BellIcon} label="Bądź na bieżąco" />
+          <MenuLink
+            to="/follow"
+            icon={BellIcon}
+            label="Bądź na bieżąco"
+            className="hidden sm:flex"
+          />
+          <li className="flex items-center sm:hidden">
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                render={
+                  <Button variant="ghost" aria-label="Menu">
+                    <MenuIcon className="size-5" />
+                  </Button>
+                }
+              />
+              <DropdownMenuContent align="end" className="sm:hidden">
+                <DropdownMenuLink
+                  to="/follow"
+                  icon={BellIcon}
+                  label="Bądź na bieżąco"
+                />
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </li>
         </ul>
       </nav>
     </header>
