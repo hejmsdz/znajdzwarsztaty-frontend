@@ -38,7 +38,7 @@ function AboutPage() {
             O&nbsp;stronie
           </h1>
 
-          <div className="mt-8 text-muted-foreground">
+          <div className="mt-8">
             <P>
               <strong>Warsztaty muzyki liturgicznej</strong> to&nbsp;spotkania
               dla&nbsp;chórzystów i&nbsp;wszystkich, którzy&nbsp;śpiewają
