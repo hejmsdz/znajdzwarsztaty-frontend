@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /follow/confirm
+Disallow: /follow/unsubscribe
