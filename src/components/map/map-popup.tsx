@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ComponentRef } from 'react';
 import { Popup } from 'react-leaflet';
-import { WorkshopDetails, WorkshopDetailsSkeleton } from './workshop-details';
+import { WorkshopDetails, WorkshopDetailsSkeleton } from '../workshop-details';
 import { useWorkshop } from '#/hooks/queries/use-workshop';
 
 function setUrlHash(workshopId: string | null) {
