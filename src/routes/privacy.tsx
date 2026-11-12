@@ -120,7 +120,7 @@ function PrivacyPage() {
             Polityka prywatności serwisu ZnajdzWarsztaty.pl
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Data ostatniej aktualizacji: 11 listopada 2026&nbsp;r.
+            Data ostatniej aktualizacji: 12 listopada 2026&nbsp;r.
           </p>
 
           <section className="mt-8 rounded-2xl border bg-card p-5">
@@ -131,7 +131,10 @@ function PrivacyPage() {
               <li>
                 Z&nbsp;mapy i&nbsp;listy warsztatów można korzystać{' '}
                 <strong>bez podawania jakichkolwiek danych</strong>. Serwis nie
-                ma kont użytkowników, reklam ani&nbsp;narzędzi analitycznych.
+                ma kont użytkowników ani&nbsp;reklam. Zliczam odwiedziny za
+                pomocą Cloudflare Web Analytics, które nie używa cookies
+                ani&nbsp;nie śledzi Cię między stronami (
+                <AnchorLink id="2-4-statystyki">punkt 2.4</AnchorLink>).
               </li>
               <li>
                 Dane podajesz tylko wtedy, gdy zapisujesz się na&nbsp;
@@ -315,8 +318,41 @@ function PrivacyPage() {
             Serwisu (art. 6 ust. 1 lit. f RODO).
           </P>
 
-          <H3 id="2-4-dane-publiczne">
-            2.4. Dane o&nbsp;warsztatach i&nbsp;prowadzących
+          <H3 id="2-4-statystyki">
+            2.4. Statystyki odwiedzin (Cloudflare Web Analytics)
+          </H3>
+          <P>
+            Żeby wiedzieć, jak często odwiedzane są poszczególne podstrony
+            Serwisu (np. mapa, lista warsztatów, wpisy o&nbsp;warsztatach),
+            korzystam z&nbsp;<strong>Cloudflare Web Analytics</strong>.
+            Przeglądarka wczytuje wtedy mały skrypt z&nbsp;domeny{' '}
+            <Code>cloudflareinsights.com</Code>, który przekazuje
+            do&nbsp;Cloudflare adres odwiedzanej strony, adres strony, z&nbsp;
+            której przyszedłeś, oraz dane techniczne przeglądarki (informacje
+            o&nbsp;przeglądarce i&nbsp;urządzeniu oraz kraj, ustalany
+            na&nbsp;podstawie adresu IP).
+          </P>
+          <P>
+            Narzędzie to <strong>nie używa plików cookies</strong>, nie stosuje
+            fingerprintingu, nie tworzy profili odwiedzających
+            i&nbsp;nie&nbsp;śledzi Cię między innymi stronami internetowymi.
+            Zbierane dane służą wyłącznie do&nbsp;przygotowania zagregowanych,
+            anonimowych statystyk (np. liczby wizyt) i&nbsp;nie pozwalają mi
+            ustalić tożsamości żadnej osoby. Dane przekazywane Cloudflare objęte
+            są jego polityką prywatności:{' '}
+            <ExternalLink href="https://www.cloudflare.com/privacypolicy/">
+              cloudflare.com/privacypolicy
+            </ExternalLink>
+            .
+          </P>
+          <P>
+            <strong>Podstawa prawna:</strong> prawnie uzasadniony interes
+            administratora, czyli analiza ruchu w&nbsp;Serwisie
+            i&nbsp;ulepszanie go (art. 6 ust. 1 lit. f RODO).
+          </P>
+
+          <H3 id="2-5-dane-publiczne">
+            2.5. Dane o&nbsp;warsztatach i&nbsp;prowadzących
           </H3>
           <P>
             Serwis prezentuje informacje o&nbsp;warsztatach: tytuł, termin,
@@ -379,7 +415,7 @@ function PrivacyPage() {
             samych, informuję o&nbsp;tym tutaj (art. 14 RODO).
           </P>
 
-          <H3 id="2-5-wiadomosci">2.5. Wiadomości przesyłane do&nbsp;mnie</H3>
+          <H3 id="2-6-wiadomosci">2.6. Wiadomości przesyłane do&nbsp;mnie</H3>
           <P>
             Jeśli napiszesz do&nbsp;mnie (np. żeby zgłosić warsztaty albo
             poprosić o&nbsp;usunięcie danych), przetwarzam Twój adres e-mail
@@ -393,9 +429,12 @@ function PrivacyPage() {
           <H2 id="3-cookies">3. Cookies i&nbsp;dane w&nbsp;przeglądarce</H2>
           <Ul>
             <li>
-              Serwis{' '}
-              <strong>nie używa narzędzi analitycznych ani reklamowych</strong>{' '}
-              i&nbsp;nie śledzi Cię między stronami.
+              Zliczam odwiedziny za&nbsp;pomocą{' '}
+              <strong>Cloudflare Web Analytics</strong>, które nie używa
+              cookies, nie profiluje odwiedzających i&nbsp;nie śledzi Cię między
+              stronami (zob.{' '}
+              <AnchorLink id="2-4-statystyki">punkt 2.4</AnchorLink>). Serwis
+              nie używa narzędzi reklamowych.
             </li>
             <li>
               Wygląd Serwisu (jasny lub&nbsp;ciemny) dopasowuje się
@@ -412,8 +451,9 @@ function PrivacyPage() {
             <li>
               Zewnętrzne usługi opisane w&nbsp;
               <AnchorLink id="5-odbiorcy">punkcie 5</AnchorLink> (Cloudflare
-              Turnstile, kafelki mapy OpenStreetMap) działają według własnych
-              zasad i&nbsp;mogą zapisywać dane w&nbsp;Twojej przeglądarce.
+              Turnstile i&nbsp;Web Analytics, kafelki mapy OpenStreetMap)
+              działają według własnych zasad i&nbsp;mogą zapisywać dane
+              w&nbsp;Twojej przeglądarce.
             </li>
           </Ul>
 
@@ -469,10 +509,10 @@ function PrivacyPage() {
 
           <H3 id="4-2-zdr">4.2. Brak zapisu treści (Zero Data Retention)</H3>
           <P>
-            W&nbsp;OpenRouter wymuszam ustawienie „Zero Data Retention”.
-            Treść zapytań i&nbsp;odpowiedzi nie&nbsp;jest zapisywana ani przez
-            OpenRouter, ani przez dostawcę chmurowego, który uruchamia model
-            GLM 5.3 Flash, ani&nbsp;przez firmę Z.ai, autora modelu. Treści
+            W&nbsp;OpenRouter wymuszam ustawienie „Zero Data Retention”. Treść
+            zapytań i&nbsp;odpowiedzi nie&nbsp;jest zapisywana ani przez
+            OpenRouter, ani przez dostawcę chmurowego, który uruchamia model GLM
+            5.3 Flash, ani&nbsp;przez firmę Z.ai, autora modelu. Treści
             te&nbsp;są przetwarzane doraźnie, wyłącznie w&nbsp;celu
             przygotowania wpisu, i&nbsp;nie&nbsp;są używane do&nbsp;trenowania
             modeli.
@@ -487,8 +527,8 @@ function PrivacyPage() {
             <AnchorLink id="6-transfer">punkcie 6</AnchorLink>. OpenRouter jest
             firmą z&nbsp;USA: dane mojego konta i&nbsp;dane operacyjne (np.
             rozliczenia, dzienniki bezpieczeństwa) mogą być tam przechowywane,
-            ale nie obejmują one treści ogłoszeń przekazywanych modelowi.
-            Zasady OpenRouter i&nbsp;poszczególnych dostawców:{' '}
+            ale nie obejmują one treści ogłoszeń przekazywanych modelowi. Zasady
+            OpenRouter i&nbsp;poszczególnych dostawców:{' '}
             <ExternalLink href="https://openrouter.ai/privacy">
               openrouter.ai/privacy
             </ExternalLink>
@@ -577,12 +617,15 @@ function PrivacyPage() {
                   )
                 </Td>
                 <Td>
-                  hosting plików strony (Cloudflare Pages) oraz weryfikacja
-                  antyspamowa formularza zapisu (Turnstile)
+                  hosting plików strony (Cloudflare Pages), weryfikacja
+                  antyspamowa formularza zapisu (Turnstile) oraz anonimowa
+                  statystyka odwiedzin (Web Analytics)
                 </Td>
                 <Td>
                   adres IP i&nbsp;dane przeglądarki każdego odwiedzającego
-                  (Pages); dodatkowo token weryfikacyjny (Turnstile)
+                  (Pages); token weryfikacyjny (Turnstile); zagregowane
+                  statystyki odwiedzin, bez cookies i&nbsp;bez danych
+                  pozwalających zidentyfikować osobę (Web Analytics)
                 </Td>
               </tr>
               <tr>
@@ -614,8 +657,8 @@ function PrivacyPage() {
           <Ul>
             <li>
               <strong>OpenRouter</strong> (pośrednik) oraz dostawcy chmurowi
-              uruchamiający model – odczyt ogłoszeń przez model językowy
-              (<AnchorLink id="4-ai">punkt 4</AnchorLink>).
+              uruchamiający model – odczyt ogłoszeń przez model językowy (
+              <AnchorLink id="4-ai">punkt 4</AnchorLink>).
             </li>
             <li>
               <strong>Google Maps Platform (Places API)</strong> – ustalanie
@@ -659,9 +702,9 @@ function PrivacyPage() {
             Gospodarczym, w&nbsp;szczególności w&nbsp;Stanach Zjednoczonych.
             Przekazanie opiera się wtedy na&nbsp;mechanizmach przewidzianych
             w&nbsp;RODO, takich jak decyzja Komisji Europejskiej
-            o&nbsp;odpowiednim stopniu ochrony (np. EU–US Data Privacy
-            Framework dla certyfikowanych firm z&nbsp;USA) albo standardowe
-            klauzule umowne.
+            o&nbsp;odpowiednim stopniu ochrony (np. EU–US Data Privacy Framework
+            dla certyfikowanych firm z&nbsp;USA) albo standardowe klauzule
+            umowne.
           </P>
           <P>
             Treści ogłoszeń przekazywane modelowi językowemu nie&nbsp;są
@@ -776,7 +819,7 @@ function PrivacyPage() {
             <li>
               <strong>sprzeciwu</strong> wobec przetwarzania opartego
               na&nbsp;prawnie uzasadnionym interesie, np. danych prowadzących
-              z&nbsp;<AnchorLink id="2-4-dane-publiczne">punktu 2.4</AnchorLink>
+              z&nbsp;<AnchorLink id="2-5-dane-publiczne">punktu 2.5</AnchorLink>
               ,
             </li>
             <li>
