@@ -3,6 +3,7 @@ import type { ComponentRef } from 'react';
 import { Popup } from 'react-leaflet';
 import { WorkshopDetails, WorkshopDetailsSkeleton } from '../workshop-details';
 import { useWorkshop } from '#/hooks/queries/use-workshop';
+import { useIsMobile } from '#/hooks/use-mobile';
 
 function setUrlHash(workshopId: string | null) {
   const { pathname, search } = window.location;
@@ -38,6 +39,7 @@ function MapPopupContent({
 export function MapPopup({ workshopId }: { workshopId: string }) {
   const [hasOpened, setHasOpened] = useState(false);
   const popupRef = useRef<ComponentRef<typeof Popup>>(null);
+  const isMobile = useIsMobile();
 
   return (
     <Popup
@@ -54,7 +56,7 @@ export function MapPopup({ workshopId }: { workshopId: string }) {
         remove: () => setUrlHash(null),
       }}
       autoPan
-      autoPanPadding={[32, 32]}
+      autoPanPadding={isMobile ? [4, 4] : [32, 32]}
     >
       {hasOpened ? (
         <MapPopupContent
