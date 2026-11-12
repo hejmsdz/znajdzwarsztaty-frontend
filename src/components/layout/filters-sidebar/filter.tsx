@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import type { ReactNode } from 'react';
 
 import {
@@ -7,18 +8,24 @@ import {
 } from '@/components/ui/sidebar';
 
 type FilterProps = {
-  label: string;
+  label: ReactNode;
   children: ReactNode;
   contentClassName?: string;
 };
 
 export function Filter({ label, children, contentClassName }: FilterProps) {
+  const id = useId();
+
   return (
     <SidebarGroup className="pt-0">
-      <SidebarGroupLabel>{label}</SidebarGroupLabel>
-      <SidebarGroupContent className={contentClassName}>
-        {children}
-      </SidebarGroupContent>
+      <fieldset aria-labelledby={id}>
+        <SidebarGroupLabel>
+          <legend id={id}>{label}</legend>
+        </SidebarGroupLabel>
+        <SidebarGroupContent className={contentClassName}>
+          {children}
+        </SidebarGroupContent>
+      </fieldset>
     </SidebarGroup>
   );
 }

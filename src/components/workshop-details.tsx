@@ -126,7 +126,7 @@ function InfoRow({
 
 export function WorkshopDetailsSkeleton({ className }: { className?: string }) {
   return (
-    <div className={cn('flex flex-col gap-3 p-4 text-sm', className)}>
+    <div className={cn('flex flex-col gap-3 p-4 text-sm', className)} aria-busy>
       <div className="flex gap-1">
         <Skeleton className="h-6 w-24 rounded-full" />
         <Skeleton className="h-6 w-20 rounded-full" />
@@ -145,10 +145,12 @@ export function WorkshopDetails({
   workshop,
   variant = 'popup',
   className,
+  titleId,
 }: {
   workshop: Workshop;
   variant?: 'popup' | 'card';
   className?: string;
+  titleId?: string;
 }) {
   const isCard = variant === 'card';
   const dates = formatWorkshopDateRange(workshop.startTime, workshop.endTime);
@@ -168,6 +170,7 @@ export function WorkshopDetails({
 
   const badgesBlock = (
     <div className="flex flex-wrap gap-1">
+      <span className="sr-only">Kategorie:</span>
       {typeLabels.map((label) => (
         <Badge key={label} variant="secondary">
           <MusicIcon />
@@ -176,18 +179,26 @@ export function WorkshopDetails({
       ))}
       {levelLabels.map((label) => (
         <Badge key={label} variant="secondary">
-          <GaugeIcon />
+          <GaugeIcon aria-label="Poziom" />
           {label}
         </Badge>
       ))}
     </div>
   );
 
-  const TitleTag = isCard ? 'h4' : 'h3';
+  const headingLevel = isCard ? 3 : 2;
+  const subHeadingLevel = isCard ? 4 : 3;
+
+  const HeadingTag = `h${headingLevel}` as const;
+  const SubHeadingTag = `h${subHeadingLevel}` as const;
+
   const titleBlock = (
-    <TitleTag className="font-heading text-lg leading-tight font-semibold">
+    <HeadingTag
+      id={titleId}
+      className="font-heading text-lg leading-tight font-semibold"
+    >
       {workshop.title}
-    </TitleTag>
+    </HeadingTag>
   );
 
   const infoBlock = (
@@ -218,10 +229,13 @@ export function WorkshopDetails({
   );
   const instructorsBlock = (
     <section className="flex flex-col gap-2">
-      <h4 className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-        Prowadząc
-        {allFemaleInstructors ? (instructors.length == 1 ? 'a' : 'e') : 'y'}
-      </h4>
+      <SubHeadingTag className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+        {allFemaleInstructors
+          ? instructors.length == 1
+            ? 'Prowadząca'
+            : 'Prowadzące'
+          : 'Prowadzący'}
+      </SubHeadingTag>
       <ul className="flex flex-col gap-2">
         {instructors.map((instructor) => (
           <li key={instructor.id}>

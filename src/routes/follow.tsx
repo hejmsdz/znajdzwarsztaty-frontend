@@ -164,6 +164,8 @@ function RouteComponent() {
                           setMaxDistanceKm(next[0]);
                         }
                       }}
+                      getAriaLabel={() => 'Maksymalna odległość'}
+                      getAriaValueText={(value) => `${value} kilometrów`}
                     />
                     <div
                       className="flex justify-between text-xs text-muted-foreground"

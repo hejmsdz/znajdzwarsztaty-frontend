@@ -28,7 +28,7 @@ function getEventNoun(count: number) {
 
 export function PageHeader({ title, totalItems }: PageHeaderProps) {
   const { toggleSidebar } = useSidebar();
-  const [search, onChange] = useWorkshopsSearchParams();
+  const [{ page, ...search }, onChange] = useWorkshopsSearchParams();
 
   const filtersCount = Object.keys(search).length;
 
@@ -50,7 +50,10 @@ export function PageHeader({ title, totalItems }: PageHeaderProps) {
         </Button>
       </div>
       {filtersCount > 0 ? (
-        <div className="px-4 pb-2 flex gap-1 overflow-auto">
+        <div
+          className="px-4 pb-2 flex gap-1 overflow-auto"
+          aria-label="Aktywne filtry"
+        >
           <FilterBadges />
           <Button
             size="xs"

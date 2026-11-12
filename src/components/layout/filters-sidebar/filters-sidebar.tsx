@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Sidebar,
@@ -59,6 +60,7 @@ type FiltersSidebarProps = {
 };
 
 export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
+  const id = useId();
   const { setOpenMobile } = useSidebar();
   const close = () => setOpenMobile(false);
   const [{ page, ...search }, onChange] = useWorkshopsSearchParams();
@@ -69,10 +71,14 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
     <Sidebar
       collapsible="none"
       className="hidden md:flex md:border-r md:border-sidebar-border"
+      aria-labelledby={id}
     >
       <SidebarHeader className="gap-3 p-4 pb-3">
         <div className="flex items-center justify-between gap-2">
-          <h2 className="font-heading text-base font-semibold tracking-tight">
+          <h2
+            id={id}
+            className="font-heading text-base font-semibold tracking-tight"
+          >
             Filtry
           </h2>
           <Button
@@ -106,7 +112,11 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
         )}
         <InstructorsFilter />
         <SliderFilter
-          label="Koszt uczestnictwa (zł)"
+          label={
+            <>
+              Koszt uczestnictwa (<abbr title="w złotych">zł</abbr>)
+            </>
+          }
           min={COST_MIN}
           max={COST_MAX}
           step={COST_STEP}
@@ -114,6 +124,18 @@ export function FiltersSidebar({ showVoivodeshipFilter }: FiltersSidebarProps) {
           onValueChange={([costMin, costMax]) => onChange({ costMin, costMax })}
           ticks={COST_TICKS}
           valueLabel={formatCostLabel(search)}
+          getAriaLabel={(index) =>
+            ['Minimalny koszt', 'Maksymalny koszt'][index]
+          }
+          getAriaValueText={(_, value, index) => {
+            if (index === 0 && value === COST_MIN) {
+              return 'bez ceny minimalnej';
+            }
+            if (index === 1 && value === COST_MAX) {
+              return 'bez ceny maksymalnej';
+            }
+            return `${['od', 'do'][index]} ${value} złotych`;
+          }}
         />
         <CheckboxFilter
           label="Rodzaj warsztatów"

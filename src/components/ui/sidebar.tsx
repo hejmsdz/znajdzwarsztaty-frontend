@@ -1,21 +1,15 @@
 import * as React from 'react';
 import { mergeProps } from '@base-ui/react/merge-props';
 import { useRender } from '@base-ui/react/use-render';
-import { cva  } from 'class-variance-authority';
-import type {VariantProps} from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
 import { cn } from 'cn';
 
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   Tooltip,
@@ -156,7 +150,7 @@ function Sidebar({
   children,
   dir,
   ...props
-}: React.ComponentProps<'div'> & {
+}: React.ComponentProps<'aside'> & {
   side?: 'left' | 'right';
   variant?: 'sidebar' | 'floating' | 'inset';
   collapsible?: 'offcanvas' | 'icon' | 'none';
@@ -165,7 +159,7 @@ function Sidebar({
 
   if (isMobile) {
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+      <Sheet open={openMobile} onOpenChange={setOpenMobile}>
         <SheetContent
           dir={dir}
           data-sidebar="sidebar"
@@ -179,11 +173,9 @@ function Sidebar({
           }
           side={side}
         >
-          <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
-          </SheetHeader>
-          <div className="flex h-full w-full flex-col">{children}</div>
+          <aside className="flex h-full w-full flex-col" {...props}>
+            {children}
+          </aside>
         </SheetContent>
       </Sheet>
     );
@@ -191,7 +183,7 @@ function Sidebar({
 
   if (collapsible === 'none') {
     return (
-      <div
+      <aside
         data-slot="sidebar"
         className={cn(
           'flex h-full w-(--sidebar-width) flex-col bg-sidebar text-sidebar-foreground',
@@ -200,7 +192,7 @@ function Sidebar({
         {...props}
       >
         {children}
-      </div>
+      </aside>
     );
   }
 
@@ -225,7 +217,7 @@ function Sidebar({
             : 'group-data-[collapsible=icon]:w-(--sidebar-width-icon)',
         )}
       />
-      <div
+      <aside
         data-slot="sidebar-container"
         data-side={side}
         className={cn(
@@ -245,7 +237,7 @@ function Sidebar({
         >
           {children}
         </div>
-      </div>
+      </aside>
     </div>
   );
 }

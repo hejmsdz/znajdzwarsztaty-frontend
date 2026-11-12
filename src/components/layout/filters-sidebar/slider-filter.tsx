@@ -1,9 +1,10 @@
+import type { ComponentProps, ReactNode } from 'react';
 import { Slider } from '@/components/ui/slider';
 
 import { Filter } from './filter';
 
 type SliderFilterProps = {
-  label: string;
+  label: ReactNode;
   min: number;
   max: number;
   step?: number;
@@ -11,7 +12,7 @@ type SliderFilterProps = {
   onValueChange: (value: [number, number]) => void;
   ticks?: string[];
   valueLabel?: string;
-};
+} & Pick<ComponentProps<typeof Slider>, 'getAriaLabel' | 'getAriaValueText'>;
 
 export function SliderFilter({
   label,
@@ -22,6 +23,8 @@ export function SliderFilter({
   onValueChange,
   ticks,
   valueLabel,
+  getAriaLabel,
+  getAriaValueText,
 }: SliderFilterProps) {
   return (
     <Filter label={label} contentClassName="px-2">
@@ -35,6 +38,8 @@ export function SliderFilter({
             onValueChange([next[0], next[1]]);
           }
         }}
+        getAriaLabel={getAriaLabel}
+        getAriaValueText={getAriaValueText}
       />
       {ticks && (
         <div

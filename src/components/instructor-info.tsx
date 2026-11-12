@@ -34,7 +34,9 @@ export function InstructorInfo({ instructor }: InstructorInfoProps) {
             '64x64',
           )} 2x`}
         />
-        <AvatarFallback>{nameToInitials(instructor.name)}</AvatarFallback>
+        <AvatarFallback aria-hidden>
+          {nameToInitials(instructor.name)}
+        </AvatarFallback>
       </Avatar>
       <div className="flex flex-col">
         <span className="font-medium">{instructor.name}</span>

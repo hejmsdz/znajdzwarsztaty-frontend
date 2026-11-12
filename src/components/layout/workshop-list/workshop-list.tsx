@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { parseWorkshopDate } from '@/components/workshop-details';
 import type { Workshop } from '#/api/workshops/workshops';
 import { useWorkshopsList } from '#/hooks/queries/use-workshops';
@@ -55,6 +55,7 @@ function pageSearch(search: WorkshopsSearch, page: number): WorkshopsSearch {
 }
 
 export function WorkshopList() {
+  const id = useId();
   const [search, onSearchChange] = useWorkshopsSearchParams();
   const { data, isPending, isError, isPlaceholderData, refetch } =
     useWorkshopsList();
@@ -113,8 +114,15 @@ export function WorkshopList() {
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto p-4">
         <div className="flex flex-col gap-8" aria-busy={isPlaceholderData}>
           {groupWorkshopsByMonth(workshops).map((group) => (
-            <section key={group.key} className="flex flex-col gap-4">
-              <h2 className="font-heading text-lg font-semibold tracking-tight first-letter:uppercase">
+            <section
+              key={group.key}
+              className="flex flex-col gap-4"
+              aria-labelledby={`${id}-${group.key}`}
+            >
+              <h2
+                id={`${id}-${group.key}`}
+                className="font-heading text-lg font-semibold tracking-tight first-letter:uppercase"
+              >
                 {group.label}
               </h2>
               {group.workshops.map((workshop) => (

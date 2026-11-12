@@ -6,7 +6,6 @@ import { Filter } from './filter';
 type CheckboxFilterOption<T extends string = string> = {
   value: T;
   label: string;
-  count?: number;
   disabled?: boolean;
 };
 
@@ -28,13 +27,11 @@ function toggleValue<T>(list: T[], value: T, checked: boolean) {
 
 function CheckboxRow({
   content,
-  count,
   checked,
   disabled,
   onCheckedChange,
 }: {
   content: ReactNode;
-  count?: number;
   checked: boolean;
   disabled?: boolean;
   onCheckedChange: (checked: boolean) => void;
@@ -47,11 +44,6 @@ function CheckboxRow({
         disabled={disabled}
       />
       <span className="flex-1">{content}</span>
-      {count !== undefined && (
-        <span className="text-xs text-muted-foreground tabular-nums">
-          {count}
-        </span>
-      )}
     </label>
   );
 }
@@ -73,7 +65,6 @@ export function CheckboxFilter<
         <CheckboxRow
           key={option.value}
           content={renderOption ? renderOption(option) : option.label}
-          count={option.count}
           checked={value.includes(option.value)}
           disabled={option.disabled}
           onCheckedChange={(checked) =>

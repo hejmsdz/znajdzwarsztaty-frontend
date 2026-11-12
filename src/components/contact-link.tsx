@@ -34,7 +34,7 @@ export function ContactLink({ url }: ContactLinkProps) {
       href={url}
       target="_blank"
       rel="noreferrer"
-      title="Kontakt"
+      aria-label="Kontakt"
       className={cn(
         buttonVariants({
           variant: 'outline',
