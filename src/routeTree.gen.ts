@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as FollowRouteImport } from './routes/follow'
 import { Route as ListRouteImport } from './routes/list'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -19,6 +20,11 @@ import { Route as FollowUnsubscribeIdRouteImport } from './routes/follow_.unsubs
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FollowRoute = FollowRouteImport.update({
@@ -49,6 +55,7 @@ const FollowUnsubscribeIdRoute = FollowUnsubscribeIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/follow': typeof FollowRoute
   '/list': typeof ListRoute
   '/privacy': typeof PrivacyRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/follow': typeof FollowRoute
   '/list': typeof ListRoute
   '/privacy': typeof PrivacyRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/follow': typeof FollowRoute
   '/list': typeof ListRoute
   '/privacy': typeof PrivacyRoute
@@ -76,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
     | '/follow'
     | '/list'
     | '/privacy'
@@ -84,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
     | '/follow'
     | '/list'
     | '/privacy'
@@ -92,6 +103,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/follow'
     | '/list'
     | '/privacy'
@@ -101,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   FollowRoute: typeof FollowRoute
   ListRoute: typeof ListRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/follow': {
@@ -157,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   FollowRoute: FollowRoute,
   ListRoute: ListRoute,
   PrivacyRoute: PrivacyRoute,

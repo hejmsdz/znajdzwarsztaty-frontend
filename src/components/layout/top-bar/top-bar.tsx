@@ -1,6 +1,6 @@
 import {
   BellIcon,
-  // InfoIcon,
+  InfoIcon,
   LayoutListIcon,
   MapPinIcon,
   MenuIcon,
@@ -35,11 +35,11 @@ const secondaryLinks: SecondaryLink[] = [
     icon: BellIcon,
     label: 'Bądź na bieżąco',
   },
-  // {
-  //   to: '/about',
-  //   icon: InfoIcon,
-  //   label: 'O stronie',
-  // },
+  {
+    to: '/about',
+    icon: InfoIcon,
+    label: 'O stronie',
+  },
 ];
 
 export function TopBar() {
@@ -76,10 +76,10 @@ export function TopBar() {
               to={link.to}
               icon={link.icon}
               label={link.label}
-              className="hidden sm:flex"
+              className="hidden md:flex"
             />
           ))}
-          <li className="flex items-center sm:hidden">
+          <li className="flex items-center md:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger
                 render={
@@ -88,7 +88,7 @@ export function TopBar() {
                   </Button>
                 }
               />
-              <DropdownMenuContent align="end" className="sm:hidden">
+              <DropdownMenuContent align="end">
                 {secondaryLinks.map((link) => (
                   <DropdownMenuLink
                     key={link.to}
