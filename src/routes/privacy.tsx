@@ -1,4 +1,5 @@
 import { TopBar } from '#/components/layout/top-bar/top-bar';
+import { Footer } from '#/components/layout/footer/footer';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '#/lib/utils';
 import type { ReactNode } from 'react';
@@ -904,6 +905,7 @@ function PrivacyPage() {
           </P>
         </article>
       </main>
+      <Footer />
     </div>
   );
 }

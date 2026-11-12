@@ -2,6 +2,7 @@ import { CitiesCombobox } from '#/components/follow/cities-combobox';
 import { SubscriptionErrorAlert } from '#/components/follow/subscription-error-alert';
 import { SuccessMessage } from '#/components/messages/success-message';
 import { TopBar } from '#/components/layout/top-bar/top-bar';
+import { Footer } from '#/components/layout/footer/footer';
 import { Button } from '#/components/ui/button';
 import {
   Field,
@@ -238,6 +239,7 @@ function RouteComponent() {
           </>
         )}
       </main>
+      <Footer />
     </div>
   );
 }

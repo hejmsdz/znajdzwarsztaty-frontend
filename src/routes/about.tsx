@@ -1,4 +1,5 @@
 import { TopBar } from '#/components/layout/top-bar/top-bar';
+import { Footer } from '#/components/layout/footer/footer';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
 
@@ -94,6 +95,7 @@ function AboutPage() {
           </div>
         </article>
       </main>
+      <Footer />
     </div>
   );
 }
