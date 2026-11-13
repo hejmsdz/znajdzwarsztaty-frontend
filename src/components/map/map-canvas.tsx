@@ -20,9 +20,10 @@ export function MapCanvas() {
         zoomControl={false}
         className="h-full w-full"
       >
+        <div className="map-placeholder" aria-hidden="true" />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <MarkerClusterGroup showCoverageOnHover={false}>
           {(workshops?.items ?? []).map(
