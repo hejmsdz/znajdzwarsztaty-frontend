@@ -9,11 +9,12 @@ function getErrorDescription(error: Error): string {
 
   switch (error.status) {
     case 400: {
-      if (
-        (error.body as any).data.email.code ===
-        'validation_too_many_subscriptions'
-      )
+      const emailErrorCode = (error.body as any)?.data?.email?.code;
+      if (emailErrorCode === 'validation_too_many_subscriptions')
         return 'Na podany adres e-mail masz już zapisanych zbyt wiele powiadomień.';
+
+      if (emailErrorCode === 'email_quota_low')
+        return 'Osiągnęliśmy już dzienny limit wysyłki maili potwierdzających. Spróbuj zapisać się na powiadomienia jutro.';
 
       return 'Formularz zawiera błędy.';
     }
