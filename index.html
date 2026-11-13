@@ -15,18 +15,6 @@
   </head>
   <body>
     <div id="app"></div>
-    <script>
-      (() => {
-        const theme = localStorage.getItem('uiTheme') || 'system';
-        const dark =
-          theme === 'dark' ||
-          (theme === 'system' &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches);
-        const rootClasses = document.documentElement.classList;
-        rootClasses.toggle('dark', dark);
-        rootClasses.toggle('light', !dark);
-      })();
-    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
