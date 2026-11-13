@@ -3,7 +3,7 @@
     X-Content-Type-Options: nosniff
     X-Frame-Options: DENY
     Referrer-Policy: strict-origin-when-cross-origin
-    Content-Security-Policy: default-src 'none'; script-src 'report-sample' 'self' https://challenges.cloudflare.com 'unsafe-eval' 'wasm-unsafe-eval'; style-src 'report-sample' 'self'; object-src 'none'; base-uri 'self'; connect-src 'self' https://api.znajdzwarsztaty.pl data:; font-src 'self'; frame-src 'self' https://challenges.cloudflare.com; img-src 'self' data: https://api.znajdzwarsztaty.pl https://tile.openstreetmap.org; manifest-src 'self'; media-src 'self';
+    Content-Security-Policy: default-src 'none'; script-src 'report-sample' 'self' https://challenges.cloudflare.com https://static.cloudflareinsights.com 'unsafe-eval' 'wasm-unsafe-eval'; style-src 'report-sample' 'self'; object-src 'none'; base-uri 'self'; connect-src 'self' https://api.znajdzwarsztaty.pl https://cloudflareinsights.com data:; font-src 'self'; frame-src 'self' https://challenges.cloudflare.com; img-src 'self' data: https://api.znajdzwarsztaty.pl https://tile.openstreetmap.org; manifest-src 'self'; media-src 'self';
 
 /
     Link: <https://tile.openstreetmap.org>; rel=preconnect
