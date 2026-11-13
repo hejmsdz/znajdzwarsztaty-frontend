@@ -10,7 +10,11 @@ const CARD_CLASS = 'rounded-2xl border bg-card shadow-sm';
 export function WorkshopCard({ workshop }: { workshop: Workshop }) {
   const id = useId();
   return (
-    <article className={CARD_CLASS} aria-labelledby={id}>
+    <article
+      className={CARD_CLASS}
+      aria-labelledby={id}
+      id={`w-${workshop.id}`}
+    >
       <WorkshopDetails workshop={workshop} variant="card" titleId={id} />
     </article>
   );
