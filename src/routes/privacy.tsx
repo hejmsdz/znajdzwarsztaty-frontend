@@ -1,4 +1,5 @@
 import { TopBar } from '#/components/layout/top-bar/top-bar';
+import { Main } from '#/components/layout/main';
 import { Footer } from '#/components/layout/footer/footer';
 import { createFileRoute } from '@tanstack/react-router';
 import { cn } from '#/lib/utils';
@@ -115,7 +116,7 @@ function PrivacyPage() {
   return (
     <div className="flex min-h-svh flex-col">
       <TopBar />
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:py-16">
+      <Main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10 md:py-16">
         <article className="text-sm leading-relaxed">
           <h1 className="font-heading text-3xl font-semibold tracking-tight">
             Polityka prywatności serwisu ZnajdzWarsztaty.pl
@@ -904,7 +905,7 @@ function PrivacyPage() {
             lub&nbsp;w&nbsp;Serwisie.
           </P>
         </article>
-      </main>
+      </Main>
       <Footer />
     </div>
   );

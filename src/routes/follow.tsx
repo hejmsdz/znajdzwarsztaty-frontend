@@ -2,6 +2,7 @@ import { CitiesCombobox } from '#/components/follow/cities-combobox';
 import { SubscriptionErrorAlert } from '#/components/follow/subscription-error-alert';
 import { SuccessMessage } from '#/components/messages/success-message';
 import { TopBar } from '#/components/layout/top-bar/top-bar';
+import { Main } from '#/components/layout/main';
 import { Footer } from '#/components/layout/footer/footer';
 import { Button } from '#/components/ui/button';
 import {
@@ -93,7 +94,7 @@ function RouteComponent() {
   return (
     <div className="flex min-h-svh flex-col">
       <TopBar />
-      <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10 md:py-16">
+      <Main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10 md:py-16">
         {isSuccess ? (
           <SuccessMessage title="Prawie gotowe!">
             Wysłaliśmy wiadomość z&nbsp;linkiem potwierdzającym na&nbsp;adres{' '}
@@ -238,7 +239,7 @@ function RouteComponent() {
             </p>
           </>
         )}
-      </main>
+      </Main>
       <Footer />
     </div>
   );

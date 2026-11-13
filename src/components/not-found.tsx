@@ -1,5 +1,6 @@
 import { ErrorMessage } from '#/components/messages/error-message';
 import { TopBar } from '#/components/layout/top-bar/top-bar';
+import { Main } from '#/components/layout/main';
 import { Footer } from '#/components/layout/footer/footer';
 import { Link } from '@tanstack/react-router';
 
@@ -10,7 +11,7 @@ export function NotFound() {
   return (
     <div className="flex min-h-svh flex-col">
       <TopBar />
-      <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10 md:py-16">
+      <Main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-10 md:py-16">
         <ErrorMessage title="Nie znaleziono strony">
           Strona, której szukasz, nie istnieje albo została przeniesiona. Wróć
           na&nbsp;
@@ -23,7 +24,7 @@ export function NotFound() {
           </Link>
           .
         </ErrorMessage>
-      </main>
+      </Main>
       <Footer />
     </div>
   );

@@ -5,7 +5,8 @@ import { FiltersSidebar } from '#/components/layout/filters-sidebar/filters-side
 import { MapCanvas } from '#/components/map/map-canvas';
 import { PageHeader } from '#/components/layout/page-header/page-header';
 import { TopBar } from '#/components/layout/top-bar/top-bar';
-import { SidebarInset, SidebarProvider } from '#/components/ui/sidebar';
+import { MainInset } from '#/components/layout/main';
+import { SidebarProvider } from '#/components/ui/sidebar';
 import { useWorkshops } from '#/hooks/queries/use-workshops';
 
 export const Route = createFileRoute('/')({
@@ -24,12 +25,12 @@ function Home() {
       <TopBar />
       <div className="flex min-h-0 flex-1 overflow-hidden">
         <FiltersSidebar />
-        <SidebarInset className="min-w-0">
+        <MainInset className="min-w-0">
           <PageHeader title="Mapa warsztatów" totalItems={data?.totalItems} />
           <div className="flex min-h-0 flex-1 flex-col">
             <MapCanvas />
           </div>
-        </SidebarInset>
+        </MainInset>
       </div>
     </SidebarProvider>
   );

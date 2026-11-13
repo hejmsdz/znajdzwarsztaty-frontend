@@ -10,6 +10,7 @@ import { Link } from '@tanstack/react-router';
 import type { LinkComponentProps } from '@tanstack/react-router';
 import { DropdownMenuLink } from './dropdown-menu-link';
 import { MenuLink } from './menu-link';
+import { MAIN_CONTENT_ID } from '#/components/layout/main';
 import logo from '#/assets/logo.svg';
 import { Button } from '#/components/ui/button';
 import {
@@ -45,6 +46,12 @@ const secondaryLinks: SecondaryLink[] = [
 export function TopBar() {
   return (
     <header className="flex justify-between h-20 shrink-0 items-center gap-2 border-b bg-background px-4">
+      <a
+        href={`#${MAIN_CONTENT_ID}`}
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"
+      >
+        Przejdź do treści
+      </a>
       <div>
         <Link to="/" className="flex items-center gap-2">
           <img
