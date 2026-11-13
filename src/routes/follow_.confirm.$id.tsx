@@ -23,7 +23,7 @@ function getErrorDescription(error: Error | null): string {
     (error instanceof ApiError &&
       (error.status === 400 || error.status === 404))
   ) {
-    return 'Ten link potwierdzający jest nieprawidłowy. Zapisz się ponownie, aby otrzymać nowy link.';
+    return 'Ten link potwierdzający jest nieprawidłowy albo wygasł. Zapisz się ponownie, aby otrzymać nowy link.';
   }
 
   return 'Wystąpił błąd podczas potwierdzania subskrypcji. Spróbuj ponownie później.';
