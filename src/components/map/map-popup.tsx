@@ -1,6 +1,8 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import type { ComponentRef } from 'react';
 import { Popup } from 'react-leaflet';
+import { useLeafletContext } from '@react-leaflet/core';
+import type { Marker } from 'leaflet';
 import FocusLock from 'react-focus-lock';
 import { WorkshopDetails, WorkshopDetailsSkeleton } from '../workshop-details';
 import { useWorkshop } from '#/hooks/queries/use-workshop';
@@ -62,11 +64,41 @@ function MapPopupContent({
   );
 }
 
+// Leaflet keeps a closing popup in the DOM for ~200ms to fade it out, while
+// `.leaflet-container:has(.leaflet-popup) .leaflet-tooltip` hides tooltips.
+// A tooltip opened within that window is measured at width 0 and mispositioned.
+const TOOLTIP_SUPPRESS_MS = 500;
+
 export function MapPopup({ workshopId }: { workshopId: string }) {
   const [hasOpened, setHasOpened] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const popupRef = useRef<ComponentRef<typeof Popup>>(null);
   const isMobile = useIsMobile();
+  const closedAtRef = useRef(0);
+  const context = useLeafletContext();
+
+  // When the popup closes, FocusLock returns focus to the marker, and Leaflet
+  // opens the marker's tooltip on focus. Close it again in that case so the
+  // tooltip stays hidden; it would otherwise resurface mispositioned (Leaflet
+  // sizes it while it is still hidden by the popup's fade-out).
+  useEffect(() => {
+    const marker = context.overlayContainer as Marker | undefined;
+    const container = context.map.getContainer();
+    if (!marker) return;
+
+    const onContainerFocus = (event: FocusEvent) => {
+      const justClosed = Date.now() - closedAtRef.current < TOOLTIP_SUPPRESS_MS;
+      if (justClosed && event.target === marker.getElement()) {
+        // Microtask: run after Leaflet's own focus handler opens the tooltip.
+        Promise.resolve().then(() => marker.closeTooltip());
+      }
+    };
+
+    container.addEventListener('focus', onContainerFocus, true);
+    return () => {
+      container.removeEventListener('focus', onContainerFocus, true);
+    };
+  }, [context]);
 
   return (
     <Popup
@@ -82,12 +114,9 @@ export function MapPopup({ workshopId }: { workshopId: string }) {
           setUrlHash(workshopId);
         },
         remove: () => {
+          closedAtRef.current = Date.now();
           setUrlHash(null);
           setIsOpen(false);
-          setTimeout(() => {
-            // popupRef.current?.closeTooltip();
-            // debugger;
-          }, 0);
         },
       }}
       autoPan
