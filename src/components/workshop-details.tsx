@@ -197,7 +197,7 @@ export function WorkshopDetails({
       id={titleId}
       className="font-heading text-lg leading-tight font-semibold"
     >
-      {workshop.title}
+      {workshop.title.replaceAll(/\b(\p{L}{1,3}) /gu, '$1\u00a0')}
     </HeadingTag>
   );
 
