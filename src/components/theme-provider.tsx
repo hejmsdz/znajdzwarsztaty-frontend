@@ -21,6 +21,10 @@ const defaultTheme: Theme = 'system';
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') {
+      return defaultTheme;
+    }
+
     const storedTheme = localStorage.getItem(storageKey);
 
     return storedTheme === 'dark' ||

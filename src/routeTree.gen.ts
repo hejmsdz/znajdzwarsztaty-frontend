@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as FollowRouteImport } from './routes/follow'
 import { Route as ListRouteImport } from './routes/list'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ShellRouteImport } from './routes/shell'
 import { Route as FollowConfirmIdRouteImport } from './routes/follow_.confirm.$id'
 import { Route as FollowUnsubscribeIdRouteImport } from './routes/follow_.unsubscribe.$id'
 
@@ -42,6 +43,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellRoute = ShellRouteImport.update({
+  id: '/shell',
+  path: '/shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FollowConfirmIdRoute = FollowConfirmIdRouteImport.update({
   id: '/follow_/confirm/$id',
   path: '/follow/confirm/$id',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/follow': typeof FollowRoute
   '/list': typeof ListRoute
   '/privacy': typeof PrivacyRoute
+  '/shell': typeof ShellRoute
   '/follow/confirm/$id': typeof FollowConfirmIdRoute
   '/follow/unsubscribe/$id': typeof FollowUnsubscribeIdRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/follow': typeof FollowRoute
   '/list': typeof ListRoute
   '/privacy': typeof PrivacyRoute
+  '/shell': typeof ShellRoute
   '/follow/confirm/$id': typeof FollowConfirmIdRoute
   '/follow/unsubscribe/$id': typeof FollowUnsubscribeIdRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/follow': typeof FollowRoute
   '/list': typeof ListRoute
   '/privacy': typeof PrivacyRoute
+  '/shell': typeof ShellRoute
   '/follow_/confirm/$id': typeof FollowConfirmIdRoute
   '/follow_/unsubscribe/$id': typeof FollowUnsubscribeIdRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/follow'
     | '/list'
     | '/privacy'
+    | '/shell'
     | '/follow/confirm/$id'
     | '/follow/unsubscribe/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/follow'
     | '/list'
     | '/privacy'
+    | '/shell'
     | '/follow/confirm/$id'
     | '/follow/unsubscribe/$id'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/follow'
     | '/list'
     | '/privacy'
+    | '/shell'
     | '/follow_/confirm/$id'
     | '/follow_/unsubscribe/$id'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   FollowRoute: typeof FollowRoute
   ListRoute: typeof ListRoute
   PrivacyRoute: typeof PrivacyRoute
+  ShellRoute: typeof ShellRoute
   FollowConfirmIdRoute: typeof FollowConfirmIdRoute
   FollowUnsubscribeIdRoute: typeof FollowUnsubscribeIdRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shell': {
+      id: '/shell'
+      path: '/shell'
+      fullPath: '/shell'
+      preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/follow_/confirm/$id': {
       id: '/follow_/confirm/$id'
       path: '/follow/confirm/$id'
@@ -181,9 +201,19 @@ const rootRouteChildren: RootRouteChildren = {
   FollowRoute: FollowRoute,
   ListRoute: ListRoute,
   PrivacyRoute: PrivacyRoute,
+  ShellRoute: ShellRoute,
   FollowConfirmIdRoute: FollowConfirmIdRoute,
   FollowUnsubscribeIdRoute: FollowUnsubscribeIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

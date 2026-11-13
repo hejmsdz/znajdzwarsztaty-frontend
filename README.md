@@ -1,4 +1,9 @@
-Welcome to your new TanStack Start app!
+# Znajdź Warsztaty — frontend
+
+Frontend of [znajdzwarsztaty.pl](https://znajdzwarsztaty.pl) — a searchable map
+and list of liturgical music workshops in Poland. Built with React, TanStack
+Start (static generation mode), TanStack Router, TanStack Query, Tailwind CSS
+v4 and Leaflet.
 
 # Getting Started
 
@@ -11,28 +16,36 @@ npm run dev
 
 # Building For Production
 
-To build this application for production:
-
 ```bash
 npm run build
 ```
 
-## Styling
+The build prerenders every route that doesn't have path parameters to static
+HTML files (static generation, no server runtime needed in production). The
+deployable output is the `dist/client` directory.
 
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
+Deployment notes (configured for Cloudflare Pages, see `public/_headers` and
+`public/_redirects`):
 
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Remove `@tailwindcss/vite` and `tailwindcss` from `package.json`
+- Static assets are served first; every route without path params (`/`,
+  `/about`, `/list`, `/follow`, `/privacy`) is served as prerendered HTML. The
+  home page includes the full page chrome and the gradient that approximates
+  the map; the Leaflet map itself is loaded in a separate, deferred client
+  chunk after hydration (see `src/routes/index.tsx`).
+- Any other path falls back to `/_shell.html` (the SPA shell generated during
+  the build from the placeholder route in `src/routes/shell.tsx`) and is
+  rendered on the client after hydration. This covers routes with path
+  parameters, e.g. `/follow/confirm/$id` links from e-mails.
+- TanStack Start injects inline scripts (theme initialization, hydration
+  data), so the Content-Security-Policy in `public/_headers` allows
+  `'unsafe-inline'` in `script-src`.
 
 ## Linting & Formatting
 
-This project uses [eslint](https://eslint.org/) and [prettier](https://prettier.io/) for linting and formatting. Eslint is configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint). The following scripts are available:
+This project uses [eslint](https://eslint.org/) and
+[prettier](https://prettier.io/) for linting and formatting. Eslint is
+configured using [tanstack/eslint-config](https://tanstack.com/config/latest/docs/eslint).
+The following scripts are available:
 
 ```bash
 npm run lint
@@ -42,19 +55,25 @@ npm run check
 
 ## Routing
 
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
+This project uses [TanStack Router](https://tanstack.com/router) with
+file-based routing via TanStack Start. Routes are managed as files in
+`src/routes`; the route tree is generated automatically by the TanStack Start
+Vite plugin when running `npm run dev` or `npm run build` (no separate
+generation step needed).
 
 ### Adding A Route
 
-To add a new route to your application just add a new file in the `./src/routes` directory.
+To add a new route to your application just add a new file in the
+`./src/routes` directory.
 
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
+Static routes (without path parameters) are prerendered automatically. Routes
+that render browser-only libraries (e.g. the Leaflet map) should opt out with
+`ssr: false` in their route options.
 
 ### Adding Links
 
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
+To use SPA navigation you will need to import the `Link` component from
+`@tanstack/react-router`:
 
 ```tsx
 import { Link } from '@tanstack/react-router';
@@ -68,122 +87,30 @@ Then anywhere in your JSX you can use it like so:
 
 This will create a link that will navigate to the `/about` route.
 
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
+More information on the `Link` component can be found in the
+[Link documentation](https://tanstack.com/router/latest/docs/framework/react/api/router/linkComponent).
 
-### Using A Layout
+### Document Head
 
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router';
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: 'My App' },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-});
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from '@tanstack/react-start';
-
-const getServerTime = createServerFn({
-  method: 'GET',
-}).handler(async () => {
-  return new Date().toISOString();
-});
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState('');
-
-  useEffect(() => {
-    getServerTime().then(setTime);
-  }, []);
-
-  return <div>Server time: {time}</div>;
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router';
-import { json } from '@tanstack/react-start';
-
-export const Route = createFileRoute('/api/hello')({
-  server: {
-    handlers: {
-      GET: () => json({ message: 'Hello, World!' }),
-    },
-  },
-});
-```
+There is no `index.html`; the full document (`<html>`, `<head>`, `<body>`) is
+rendered by the root route in `src/routes/__root.tsx`. Meta tags, favicons and
+global styles are configured in its `head` option via `HeadContent`.
 
 ## Data Fetching
 
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from '@tanstack/react-router';
-
-export const Route = createFileRoute('/people')({
-  loader: async () => {
-    const response = await fetch('https://swapi.dev/api/people');
-    return response.json();
-  },
-  component: PeopleComponent,
-});
-
-function PeopleComponent() {
-  const data = Route.useLoaderData();
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  );
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
+Data comes from the external API (`VITE_API_URL`) via
+[TanStack Query](https://tanstack.com/query) hooks in `src/hooks/queries`.
+The QueryClient is created in `src/router.tsx` and integrated with the router
+through `setupRouterSsrQueryIntegration`, which handles de/hydration of the
+query cache during prerendering.
 
 # Learn More
 
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
+You can learn more about all of the offerings from TanStack in the
+[TanStack documentation](https://tanstack.com).
 
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+For TanStack Start specific documentation, visit
+[TanStack Start](https://tanstack.com/start), in particular the
+[static prerendering](https://tanstack.com/start/latest/docs/framework/react/guide/static-prerendering)
+and [SPA mode](https://tanstack.com/start/latest/docs/framework/react/guide/spa-mode)
+guides.

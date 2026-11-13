@@ -1,0 +1,5 @@
+# Static-generation fallback: routes that are not prerendered (e.g. routes
+# with path params such as /follow/confirm/$id) are served the SPA shell and
+# rendered on the client after hydration. Existing static assets are always
+# matched first, so prerendered pages are unaffected.
+/* /_shell.html 200
