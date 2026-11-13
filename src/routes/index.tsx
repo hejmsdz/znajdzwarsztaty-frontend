@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import type { CSSProperties } from 'react';
 import { workshopsSearchSchema } from '#/filters/types';
-import { FiltersSidebar } from '@/components/layout/filters-sidebar/filters-sidebar';
+import { FiltersSidebar } from '#/components/layout/filters-sidebar/filters-sidebar';
 import { MapCanvas } from '#/components/map/map-canvas';
 import { PageHeader } from '#/components/layout/page-header/page-header';
-import { TopBar } from '@/components/layout/top-bar/top-bar';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { TopBar } from '#/components/layout/top-bar/top-bar';
+import { SidebarInset, SidebarProvider } from '#/components/ui/sidebar';
 import { useWorkshops } from '#/hooks/queries/use-workshops';
 
 export const Route = createFileRoute('/')({

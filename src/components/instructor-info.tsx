@@ -1,7 +1,7 @@
 import { getImageUrl } from '#/api/images';
 import type { Instructor } from '#/api/instructors';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar';
+import { Skeleton } from '#/components/ui/skeleton';
 
 function nameToInitials(fullName: string) {
   return fullName

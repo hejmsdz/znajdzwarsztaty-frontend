@@ -1,12 +1,12 @@
 import { useId } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '#/components/ui/button';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   useSidebar,
-} from '@/components/ui/sidebar';
+} from '#/components/ui/sidebar';
 import { XIcon } from 'lucide-react';
 import { CheckboxFilter } from './checkbox-filter';
 import { InstructorsFilter } from './instructors-filter';
@@ -20,8 +20,8 @@ import {
   DURATIONS,
   LEVELS,
   WORKSHOP_TYPES,
-} from '@/filters/types';
-import type { WorkshopsSearch } from '@/filters/types';
+} from '#/filters/types';
+import type { WorkshopsSearch } from '#/filters/types';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
 import { useVoivodeships } from '#/hooks/queries/use-voivodeships';
 import { Input } from '#/components/ui/input';

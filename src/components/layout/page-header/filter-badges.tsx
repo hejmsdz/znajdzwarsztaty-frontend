@@ -1,5 +1,5 @@
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
-import type { WorkshopsFilters } from '@/filters/types';
+import type { WorkshopsFilters } from '#/filters/types';
 import { FilterBadge } from './filter-badge';
 import { FilterValue } from './filter-value';
 

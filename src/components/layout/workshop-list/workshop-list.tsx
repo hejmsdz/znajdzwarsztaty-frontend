@@ -1,11 +1,11 @@
 import { useEffect, useId, useRef } from 'react';
-import { parseWorkshopDate } from '@/components/workshop-details';
+import { parseWorkshopDate } from '#/components/workshop-details';
 import type { Workshop } from '#/api/workshops/workshops';
 import { useWorkshopsList } from '#/hooks/queries/use-workshops';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
-import { emptySearch } from '@/filters/types';
+import { emptySearch } from '#/filters/types';
 import type { WorkshopsSearch } from '#/filters/types';
-import { Button } from '@/components/ui/button';
+import { Button } from '#/components/ui/button';
 import {
   Pagination,
   PaginationContent,
@@ -13,7 +13,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination';
+} from '#/components/ui/pagination';
 import { WorkshopCard, WorkshopCardSkeleton } from './workshop-card';
 
 const MONTH_FORMATTER = new Intl.DateTimeFormat('pl-PL', {

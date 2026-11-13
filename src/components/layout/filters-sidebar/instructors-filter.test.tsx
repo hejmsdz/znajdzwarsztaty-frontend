@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import { SidebarProvider } from '#/components/ui/sidebar';
 import { InstructorsFilter } from './instructors-filter';
 import type { Instructor } from '#/api/instructors';
 

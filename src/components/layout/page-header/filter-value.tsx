@@ -3,9 +3,9 @@ import {
   LEVELS,
   VOIVODESHIPS,
   WORKSHOP_TYPES,
-} from '@/filters/types';
-import type { WorkshopsFilters } from '@/filters/types';
-import { useInstructor } from '@/hooks/queries/use-instructor';
+} from '#/filters/types';
+import type { WorkshopsFilters } from '#/filters/types';
+import { useInstructor } from '#/hooks/queries/use-instructor';
 
 type FilterValueProps<
   T extends keyof WorkshopsFilters = keyof WorkshopsFilters,

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import {
   InstructorInfo,
   InstructorInfoSkeleton,
-} from '@/components/instructor-info';
-import { Button } from '@/components/ui/button';
+} from '#/components/instructor-info';
+import { Button } from '#/components/ui/button';
 import {
   useInstructorsHead,
   useInstructorsPages,

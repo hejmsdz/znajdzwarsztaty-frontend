@@ -1,6 +1,6 @@
 import { FilterIcon } from 'lucide-react';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
-import { Button } from '@/components/ui/button';
+import { Button } from '#/components/ui/button';
 import { useSidebar } from '../../ui/sidebar';
 import { Badge } from '../../ui/badge';
 import { emptySearch } from '#/filters/types';

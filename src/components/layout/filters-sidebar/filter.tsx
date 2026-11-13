@@ -5,7 +5,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-} from '@/components/ui/sidebar';
+} from '#/components/ui/sidebar';
 
 type FilterProps = {
   label: ReactNode;

@@ -1,6 +1,6 @@
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import { useMap } from 'react-leaflet';
-import { Button } from '@/components/ui/button';
+import { Button } from '#/components/ui/button';
 
 export function MapControls() {
   const map = useMap();

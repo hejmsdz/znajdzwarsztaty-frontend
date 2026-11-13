@@ -1,7 +1,7 @@
 import {
   WorkshopDetails,
   WorkshopDetailsSkeleton,
-} from '@/components/workshop-details';
+} from '#/components/workshop-details';
 import type { Workshop } from '#/api/workshops/workshops';
 import { useId } from 'react';
 

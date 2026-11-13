@@ -9,10 +9,10 @@ import type { LucideIcon } from 'lucide-react';
 import { cn } from 'cn';
 import type { Workshop } from '#/api/workshops/workshops';
 import { LEVELS, WORKSHOP_TYPES } from '#/filters/types';
-import { Badge } from '@/components/ui/badge';
-import { buttonVariants } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Badge } from '#/components/ui/badge';
+import { buttonVariants } from '#/components/ui/button';
+import { Separator } from '#/components/ui/separator';
+import { Skeleton } from '#/components/ui/skeleton';
 import { ContactLink } from './contact-link';
 import { InstructorInfo } from './instructor-info';
 

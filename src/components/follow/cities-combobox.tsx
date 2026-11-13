@@ -6,7 +6,7 @@ import {
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
-} from '@/components/ui/combobox';
+} from '#/components/ui/combobox';
 import { useCitiesByLetter } from '#/hooks/queries/use-cities-by-letter';
 import type { City } from '#/hooks/queries/use-cities-by-letter';
 
