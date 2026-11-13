@@ -20,20 +20,22 @@ export function InstructorInfo({ instructor }: InstructorInfoProps) {
   return (
     <div className="flex gap-2 items-center" data-testid="instructor-info">
       <Avatar>
-        <AvatarImage
-          src={getImageUrl(
-            instructor.collectionId,
-            instructor.id,
-            instructor.photo,
-            '32x32',
-          )}
-          srcSet={`${getImageUrl(
-            instructor.collectionId,
-            instructor.id,
-            instructor.photo,
-            '64x64',
-          )} 2x`}
-        />
+        {instructor.photo ? (
+          <AvatarImage
+            src={getImageUrl(
+              instructor.collectionId,
+              instructor.id,
+              instructor.photo,
+              '32x32',
+            )}
+            srcSet={`${getImageUrl(
+              instructor.collectionId,
+              instructor.id,
+              instructor.photo,
+              '64x64',
+            )} 2x`}
+          />
+        ) : null}
         <AvatarFallback aria-hidden>
           {nameToInitials(instructor.name)}
         </AvatarFallback>
