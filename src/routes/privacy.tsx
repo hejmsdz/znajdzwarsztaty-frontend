@@ -177,8 +177,11 @@ function PrivacyPage() {
             <strong>Mikołaj Rozwadowski</strong>. We wszystkich sprawach
             związanych z&nbsp;prywatnością i&nbsp;danymi osobowymi możesz
             się&nbsp;ze&nbsp;mną skontaktować pod adresem{' '}
-            <a href="mailto:mikolaj@mrozwadowski.com" className={LINK_CLASS}>
-              mikolaj@mrozwadowski.com
+            <a
+              href={`mailto:${import.meta.env.VITE_ADMIN_EMAIL}`}
+              className={LINK_CLASS}
+            >
+              {import.meta.env.VITE_ADMIN_EMAIL}
             </a>
             . Nie powołałem inspektora ochrony danych.
           </P>

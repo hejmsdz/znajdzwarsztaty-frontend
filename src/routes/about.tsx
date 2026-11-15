@@ -78,11 +78,11 @@ function AboutPage() {
               wiadomość e-mail.
             </P>
             <P>
-              Większość informacji o&nbsp;warsztatach pochodzi z&nbsp;profilu{' '}
+              Większość informacji o&nbsp;warsztatach pochodzi ze&nbsp;strony{' '}
               <ExternalLink href="https://www.facebook.com/p/Warsztaty-Muzyki-Liturgicznej-Baza-wydarze%C5%84-61585764502053/">
                 Warsztaty Muzyki Liturgicznej: Baza wydarzeń
               </ExternalLink>{' '}
-              na&nbsp;Facebooku – dziękujemy jego administracji
+              na&nbsp;Facebooku – dziękujemy jej administracji
               za&nbsp;udostępnienie danych! Jeśli organizujesz warsztaty
               i&nbsp;chcesz, aby&nbsp;pojawiły się również tutaj, napisz
               do&nbsp;tego profilu przez{' '}
@@ -91,7 +91,13 @@ function AboutPage() {
               </ExternalLink>
               . W&nbsp;przyszłości planujemy uruchomić specjalną skrzynkę
               e-mailową, na&nbsp;którą będzie można nadsyłać informacje
-              o&nbsp;wydarzeniach bezpośrednio do&nbsp;nas.
+              o&nbsp;wydarzeniach bezpośrednio do&nbsp;nas. W sprawach
+              technicznych albo dotyczących błędnych/nieaktualnych danych możesz
+              się skontaktować z&nbsp;
+              <ExternalLink href={`mailto:${import.meta.env.VITE_ADMIN_EMAIL}`}>
+                administratorem
+              </ExternalLink>
+              .
             </P>
           </div>
         </article>
