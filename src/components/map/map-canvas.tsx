@@ -12,7 +12,7 @@ export function MapCanvas() {
   const { data: workshops } = useWorkshops();
 
   return (
-    <div className="relative min-h-0 flex-1" aria-label="Mapa">
+    <div className="relative min-h-0 flex-1 @container-size" aria-label="Mapa">
       <MapContainer
         center={MAP_CENTER}
         zoom={DEFAULT_ZOOM}

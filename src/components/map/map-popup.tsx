@@ -43,6 +43,7 @@ function MapPopupContent({
     <div
       ref={ref}
       role="dialog"
+      className="max-h-[calc(100cqh-48px-16px)] w-90 max-w-[calc(100vw-32px)] overflow-auto"
       aria-busy={!workshop}
       aria-labelledby={titleId}
     >
@@ -135,7 +136,7 @@ export function MapPopup({ workshopId }: { workshopId: string }) {
         },
       }}
       autoPan
-      autoPanPadding={isMobile ? [4, 4] : [32, 32]}
+      autoPanPadding={isMobile ? [16, 16] : [32, 32]}
       closeButton={false}
     >
       <FocusLock returnFocus disabled={!isOpen}>
