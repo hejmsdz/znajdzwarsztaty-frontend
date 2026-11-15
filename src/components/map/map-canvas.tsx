@@ -1,6 +1,8 @@
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { MapContainer, Marker, TileLayer, Tooltip } from 'react-leaflet';
 import { useWorkshops } from '#/hooks/queries/use-workshops';
+import { WorkshopsEmptyState } from '#/components/workshops-empty-state';
+import { WorkshopsErrorState } from '#/components/workshops-error-state';
 import { MapPopup } from './map-popup';
 import { MapControls } from './map-controls';
 import { pinIcon } from './pin';
@@ -9,7 +11,10 @@ const MAP_CENTER: [number, number] = [52.06, 19.48];
 const DEFAULT_ZOOM = 6;
 
 export function MapCanvas() {
-  const { data: workshops } = useWorkshops();
+  const { data: workshops, isPending, isError, refetch } = useWorkshops();
+
+  const items = workshops?.items ?? [];
+  const showMessage = !isPending && (isError || items.length === 0);
 
   return (
     <div className="relative min-h-0 flex-1 @container-size" aria-label="Mapa">
@@ -43,6 +48,20 @@ export function MapCanvas() {
         </MarkerClusterGroup>
         <MapControls />
       </MapContainer>
+      {showMessage && (
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-background/20 backdrop-blur-xs p-4">
+          <div className="rounded-2xl bg-card/95 p-6 shadow-lg ring-1 ring-foreground/5">
+            {isError ? (
+              <WorkshopsErrorState
+                className="pointer-events-auto"
+                onRetry={refetch}
+              />
+            ) : (
+              <WorkshopsEmptyState className="pointer-events-auto" />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

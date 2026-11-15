@@ -3,9 +3,7 @@ import { parseWorkshopDate } from '#/components/workshop-details';
 import type { Workshop } from '#/api/workshops/workshops';
 import { useWorkshopsList } from '#/hooks/queries/use-workshops';
 import { useWorkshopsSearchParams } from '#/hooks/use-workshops-search-params';
-import { emptySearch } from '#/filters/types';
 import type { WorkshopsSearch } from '#/filters/types';
-import { Button } from '#/components/ui/button';
 import {
   Pagination,
   PaginationContent,
@@ -15,6 +13,8 @@ import {
   PaginationPrevious,
 } from '#/components/ui/pagination';
 import { WorkshopCard, WorkshopCardSkeleton } from './workshop-card';
+import { WorkshopsEmptyState } from '#/components/workshops-empty-state';
+import { WorkshopsErrorState } from '#/components/workshops-error-state';
 
 const MONTH_FORMATTER = new Intl.DateTimeFormat('pl-PL', {
   month: 'long',
@@ -56,7 +56,7 @@ function pageSearch(search: WorkshopsSearch, page: number): WorkshopsSearch {
 
 export function WorkshopList() {
   const id = useId();
-  const [search, onSearchChange] = useWorkshopsSearchParams();
+  const [search] = useWorkshopsSearchParams();
   const { data, isPending, isError, isPlaceholderData, refetch } =
     useWorkshopsList();
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -82,27 +82,9 @@ export function WorkshopList() {
               ))}
             </div>
           ) : isError ? (
-            <div className="flex flex-col items-center gap-3 py-16 text-sm">
-              <p className="text-muted-foreground">
-                Nie udało się załadować warsztatów.
-              </p>
-              <Button variant="outline" size="sm" onClick={() => refetch()}>
-                Spróbuj ponownie
-              </Button>
-            </div>
+            <WorkshopsErrorState className="py-16" onRetry={refetch} />
           ) : (
-            <div className="flex flex-col items-center gap-3 py-16 text-sm">
-              <p className="text-muted-foreground">
-                Brak warsztatów spełniających wybrane filtry.
-              </p>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => onSearchChange(emptySearch)}
-              >
-                Wyczyść filtry
-              </Button>
-            </div>
+            <WorkshopsEmptyState className="py-16" />
           )}
         </div>
       </div>
