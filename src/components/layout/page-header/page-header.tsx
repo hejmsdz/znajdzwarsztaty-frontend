@@ -9,6 +9,7 @@ import { FilterBadges } from './filter-badges';
 type PageHeaderProps = {
   title: string;
   totalItems?: number;
+  titleId?: string;
 };
 
 const PLURAL_RULES = new Intl.PluralRules('pl-PL');
@@ -26,7 +27,7 @@ function getEventNoun(count: number) {
   return EVENT_NOUNS[PLURAL_RULES.select(count)];
 }
 
-export function PageHeader({ title, totalItems }: PageHeaderProps) {
+export function PageHeader({ title, totalItems, titleId }: PageHeaderProps) {
   const { toggleSidebar } = useSidebar();
   const [{ page, ...search }, onChange] = useWorkshopsSearchParams();
 
@@ -36,7 +37,9 @@ export function PageHeader({ title, totalItems }: PageHeaderProps) {
     <header className="border-b">
       <div className="flex items-center justify-between p-4">
         <div>
-          <h1 className="text-xl font-semibold">{title}</h1>
+          <h1 className="text-xl font-semibold" id={titleId}>
+            {title}
+          </h1>
           <p className="text-sm text-muted-foreground">
             {totalItems === undefined
               ? 'Ładowanie...'

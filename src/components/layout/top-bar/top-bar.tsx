@@ -62,7 +62,7 @@ export function TopBar() {
             className="size-8 sm:size-10"
           />
           <span className="flex flex-col text-base sm:text-lg">
-            <span className="font-heading tracking-tight">
+            <span className="font-heading tracking-tight leading-tight">
               Znajdź{' '}
               <span className="font-semibold text-primary">warsztaty</span>
             </span>

@@ -1,3 +1,5 @@
+import { useRef, useState } from 'react';
+import type { SubmitEvent } from 'react';
 import { CitiesCombobox } from '#/components/follow/cities-combobox';
 import { SubscriptionErrorAlert } from '#/components/follow/subscription-error-alert';
 import { SuccessMessage } from '#/components/messages/success-message';
@@ -20,8 +22,7 @@ import { Turnstile } from '@marsidev/react-turnstile';
 import type { TurnstileInstance } from '@marsidev/react-turnstile';
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { BellRingIcon, LoaderCircleIcon } from 'lucide-react';
-import { useRef, useState } from 'react';
-import type { SubmitEvent } from 'react';
+import { useMediaQuery } from '#/hooks/use-media-query';
 
 export const Route = createFileRoute('/follow')({
   component: RouteComponent,
@@ -40,6 +41,8 @@ function RouteComponent() {
   const [city, setCity] = useState<City | null>(null);
   const [maxDistanceKm, setMaxDistanceKm] = useState(DEFAULT_DISTANCE_KM);
   const [errors, setErrors] = useState<FollowFormErrors>({});
+
+  const isMobileXs = useMediaQuery('(max-width: 390px)');
 
   const turnstileRef = useRef<TurnstileInstance | null>(null);
   const {
@@ -185,14 +188,18 @@ function RouteComponent() {
                 </FieldGroup>
 
                 <div className="mt-6 flex flex-col gap-2">
-                  <Turnstile
-                    ref={turnstileRef}
-                    siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
-                    options={{ size: 'flexible', language: 'pl' }}
-                    onSuccess={() => clearError('antispamToken')}
-                    onExpire={() => turnstileRef.current?.reset()}
-                    className="w-full"
-                  />
+                  <div className="flex justify-center">
+                    <Turnstile
+                      ref={turnstileRef}
+                      siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                      options={{
+                        size: isMobileXs ? 'compact' : 'flexible',
+                        language: 'pl',
+                      }}
+                      onSuccess={() => clearError('antispamToken')}
+                      onExpire={() => turnstileRef.current?.reset()}
+                    />
+                  </div>
                   <FieldError>{errors.antispamToken}</FieldError>
 
                   {isError ? (

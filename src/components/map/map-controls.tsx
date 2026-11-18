@@ -6,7 +6,7 @@ export function MapControls() {
   const map = useMap();
 
   return (
-    <div className="absolute right-3 bottom-10 z-1 flex flex-col gap-0.5 rounded-2xl bg-card/95 p-1 shadow-lg ring-1 ring-foreground/5">
+    <nav className="absolute right-3 bottom-10 z-1 flex flex-col gap-0.5 rounded-2xl bg-card/95 p-1 shadow-lg ring-1 ring-foreground/5">
       <Button
         variant="ghost"
         size="icon-sm"
@@ -23,6 +23,6 @@ export function MapControls() {
       >
         <MinusIcon />
       </Button>
-    </div>
+    </nav>
   );
 }

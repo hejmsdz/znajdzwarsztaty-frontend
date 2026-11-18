@@ -277,7 +277,8 @@ export function WorkshopDetails({
             }),
           )}
         >
-          Więcej informacji
+          <span className="max-[360px]:hidden">Więcej informacji</span>
+          <span className="min-[360px]:hidden">Informacje</span>
         </a>
       )}
       {workshop.contactUrl && <ContactLink url={workshop.contactUrl} />}

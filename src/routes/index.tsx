@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { useId } from 'react';
 import type { CSSProperties } from 'react';
 import { workshopsSearchSchema } from '#/filters/types';
 import { FiltersSidebar } from '#/components/layout/filters-sidebar/filters-sidebar';
@@ -16,6 +17,7 @@ export const Route = createFileRoute('/')({
 
 function Home() {
   const { data } = useWorkshops();
+  const titleId = useId();
 
   return (
     <SidebarProvider
@@ -25,8 +27,12 @@ function Home() {
       <TopBar />
       <div className="flex min-h-0 flex-1 overflow-hidden">
         <FiltersSidebar />
-        <MainInset className="min-w-0">
-          <PageHeader title="Mapa warsztatów" totalItems={data?.totalItems} />
+        <MainInset className="min-w-0" aria-labelledby={titleId}>
+          <PageHeader
+            title="Mapa warsztatów"
+            totalItems={data?.totalItems}
+            titleId={titleId}
+          />
           <div className="flex min-h-0 flex-1 flex-col">
             <MapCanvas />
           </div>

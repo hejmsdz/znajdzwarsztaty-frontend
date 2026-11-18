@@ -6,12 +6,14 @@ import { WorkshopsErrorState } from '#/components/workshops-error-state';
 import { MapPopup } from './map-popup';
 import { MapControls } from './map-controls';
 import { pinIcon } from './pin';
+import { useIsMobile } from '#/hooks/use-mobile';
 
 const MAP_CENTER: [number, number] = [52.06, 19.48];
 const DEFAULT_ZOOM = 6;
 
 export function MapCanvas() {
   const { data: workshops, isPending, isError, refetch } = useWorkshops();
+  const isMobile = useIsMobile();
 
   const items = workshops?.items ?? [];
   const showMessage = !isPending && (isError || items.length === 0);
@@ -21,7 +23,7 @@ export function MapCanvas() {
       <MapContainer
         center={MAP_CENTER}
         zoom={DEFAULT_ZOOM}
-        minZoom={6}
+        minZoom={isMobile ? 5 : 6}
         zoomControl={false}
         className="h-full w-full"
       >
