@@ -121,7 +121,7 @@ export function MapPopup({ workshopId }: { workshopId: string }) {
       ref={popupRef}
       className="workshop-popup"
       offset={[0, -22]}
-      minWidth={320}
+      minWidth={288}
       maxWidth={360}
       eventHandlers={{
         add: () => {
