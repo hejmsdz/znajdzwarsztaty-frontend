@@ -1,6 +1,9 @@
+import { useRef } from 'react';
+import type { ComponentRef } from 'react';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { MapContainer, Marker, TileLayer, Tooltip } from 'react-leaflet';
 import { useWorkshops } from '#/hooks/queries/use-workshops';
+import { useMapFocus } from '#/hooks/use-map-focus';
 import { WorkshopsEmptyState } from '#/components/workshops-empty-state';
 import { WorkshopsErrorState } from '#/components/workshops-error-state';
 import { MapPopup } from './map-popup';
@@ -14,6 +17,8 @@ const DEFAULT_ZOOM = 6;
 export function MapCanvas() {
   const { data: workshops, isPending, isError, refetch } = useWorkshops();
   const isMobile = useIsMobile();
+  const clusterRef = useRef<ComponentRef<typeof MarkerClusterGroup>>(null);
+  const captureMarker = useMapFocus(clusterRef);
 
   const items = workshops?.items ?? [];
   const showMessage = !isPending && (isError || items.length === 0);
@@ -32,10 +37,15 @@ export function MapCanvas() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <MarkerClusterGroup showCoverageOnHover={false}>
+        <MarkerClusterGroup ref={clusterRef} showCoverageOnHover={false}>
           {(workshops?.items ?? []).map(
             ({ id, title, location: { lat, lon } }) => (
-              <Marker key={id} position={[lat, lon]} icon={pinIcon(title)}>
+              <Marker
+                key={id}
+                ref={(marker) => captureMarker(marker, id)}
+                position={[lat, lon]}
+                icon={pinIcon(title)}
+              >
                 <Tooltip
                   direction="top"
                   offset={[0, -18]}
