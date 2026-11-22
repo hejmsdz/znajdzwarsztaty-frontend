@@ -10,25 +10,29 @@ import { MapPopup } from './map-popup';
 import { MapControls } from './map-controls';
 import { pinIcon } from './pin';
 import { useIsMobile } from '#/hooks/use-mobile';
+import { useMediaQuery } from '#/hooks/use-media-query';
 
 const MAP_CENTER: [number, number] = [52.06, 19.48];
-const DEFAULT_ZOOM = 6;
 
 export function MapCanvas() {
   const { data: workshops, isPending, isError, refetch } = useWorkshops();
   const isMobile = useIsMobile();
+  const isDesktopXl = useMediaQuery('(min-width: 1536px)');
   const clusterRef = useRef<ComponentRef<typeof MarkerClusterGroup>>(null);
   const captureMarker = useMapFocus(clusterRef);
 
   const items = workshops?.items ?? [];
   const showMessage = !isPending && (isError || items.length === 0);
 
+  const defaultZoom = isDesktopXl ? 7 : 6;
+  const minZoom = isMobile ? 5 : 6;
+
   return (
     <div className="relative min-h-0 flex-1 @container-size" aria-label="Mapa">
       <MapContainer
         center={MAP_CENTER}
-        zoom={DEFAULT_ZOOM}
-        minZoom={isMobile ? 5 : 6}
+        zoom={defaultZoom}
+        minZoom={minZoom}
         zoomControl={false}
         className="h-full w-full"
       >
